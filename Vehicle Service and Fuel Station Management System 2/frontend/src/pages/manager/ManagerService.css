@@ -1,0 +1,66 @@
+.manager-service {min-width:0;}
+.manager-service-heading {display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;margin-bottom:32px;}
+.manager-service-kicker {color:#d6aa6c;font-size:10px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;}
+.manager-service-primary {border-radius:999px;padding:13px 24px;font-size:11px;white-space:nowrap;}
+.manager-service-filters {display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0;max-width:100%;}
+.manager-service-search {position:relative;display:flex;align-items:center;flex:1;min-width:180px;}
+.manager-service-search input {width:100%;padding:13px 72px 13px 16px;font-size:12px;border-radius:12px;}
+.manager-service-search button {position:absolute;right:15px;font-size:12px;color:#d6aa6c;}
+.manager-service-search button[type='button'] {right:43px;color:#aeb49c;}
+.manager-service-select {position:relative;max-width:100%;}
+.manager-service-select select {appearance:none;width:160px;max-width:100%;padding:13px 30px 13px 14px;border-radius:12px;font-size:12px;}
+.manager-service-select i {position:absolute;right:12px;top:17px;font-size:9px;color:#d6aa6c;pointer-events:none;}
+.manager-service-table {margin-top:26px;}
+.manager-service-table table {min-width:1260px;}
+.manager-service-table th {text-align:left;white-space:nowrap;}
+.manager-service-table td {vertical-align:middle;overflow-wrap:anywhere;}
+.manager-service-table td:first-child {white-space:nowrap;}
+.manager-service-table .rounded-full {display:inline-block;max-width:100%;white-space:normal;}
+.manager-service-id {display:block;font:700 13px monospace;color:#e0b783;}
+.manager-service-meta {display:block;margin-top:6px;color:#aeb49c;font-size:10px;line-height:1.6;}
+.manager-service-classification {text-transform:uppercase;font-size:9px;letter-spacing:.05em;}
+.manager-service-actions {display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.manager-service-action {border-radius:9px;padding:9px 12px;background:#d6aa6c08;color:#e0b783;font-size:11px;font-weight:650;white-space:nowrap;}
+.manager-service-action:hover {background:#d6aa6c18;}
+.manager-service-action:disabled {opacity:.3;cursor:not-allowed;}
+.manager-service-empty {height:160px;text-align:center;color:#aeb49c;font-size:11px;letter-spacing:.08em;}
+.manager-service-pagination {display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:24px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#aeb49c;}
+.manager-service-page-info {display:flex;align-items:center;gap:26px;flex-wrap:wrap;}
+.manager-service-row-options,.manager-service-page-buttons {display:flex;align-items:center;gap:10px;}
+.manager-service-row-options button,.manager-service-page-buttons button {padding:10px;min-height:40px;font-weight:750;}
+.manager-service-row-options .is-active {color:#d6aa6c;box-shadow:inset 0 -2px #d6aa6c;}
+.manager-service-page-buttons button:disabled {opacity:.3;}
+.manager-service-detail-ref {display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-family:monospace;color:#d6aa6c;overflow-wrap:anywhere;}
+.manager-service-detail-grid {display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px;font-size:13px;}
+.manager-service-detail-grid dt,.manager-service-detail-notes h3 {font-size:10px;text-transform:uppercase;color:#aeb49c;margin-bottom:7px;}
+.manager-service-detail-grid dd {overflow-wrap:anywhere;}
+.manager-service-detail-notes {margin-top:26px;font-size:13px;line-height:1.7;white-space:pre-wrap;}
+.manager-history-search-card {padding:24px;background:#171a12;border-radius:18px;margin-bottom:26px;}
+.manager-history-controls {display:flex;align-items:center;gap:14px;flex-wrap:wrap;width:100%;}
+.manager-history-search {display:flex;gap:16px;align-items:center;flex:1;min-width:0;}
+.manager-history-search > div {position:relative;flex:1;min-width:0;}
+.manager-history-search input {width:100%;padding:16px 44px 16px 18px;border-radius:12px;font:12px monospace;}
+.manager-history-clear-input {position:absolute;right:16px;top:16px;color:#d6aa6c;}
+.manager-history-empty {padding:100px 24px;background:#171a12;border-radius:18px;text-align:center;}
+.manager-history-empty h2 {font-size:32px;font-weight:800;letter-spacing:-.035em;}
+.manager-history-empty p {max-width:620px;margin:22px auto 30px;font-size:14px;line-height:1.8;color:#aeb49c;}
+.manager-history-results {display:flex;justify-content:space-between;align-items:center;gap:18px;margin:30px 0 0;}
+.manager-history-results h2 {font-size:18px;}.manager-history-results > span {color:#d6aa6c;font:13px monospace;}
+.manager-history-notes {font-size:12px;white-space:pre-wrap;}
+.manager-history-loading {padding:64px;text-align:center;color:#aeb49c;}
+.manager-history-quick {display:flex;flex-wrap:wrap;gap:12px;max-width:1100px;max-height:calc(100dvh - 150px);overflow:auto;}
+.manager-service [role='dialog'] .manager-service-detail-notes p {overflow-wrap:anywhere;}
+.manager-bookings [role='dialog'] form {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+.manager-bookings [role='dialog'] form > * {margin:0;min-width:0;}
+.manager-bookings [role='dialog'] form > p,.manager-bookings [role='dialog'] form > label:first-child,.manager-bookings [role='dialog'] form > label:has(textarea) {grid-column:1/-1;}
+.manager-bookings [role='dialog'] form > button {justify-self:start;}
+@media(max-width:700px){
+ .manager-service-heading {gap:22px;align-items:flex-start;}.manager-service-heading > .manager-service-filters {width:100%;}
+ .manager-service-filters {gap:10px;}.manager-service-search {flex-basis:100%;}.manager-service-select {flex:1;}.manager-service-select select {width:100%;}
+ .manager-service-primary {padding:13px 20px;}
+ .manager-service-pagination {flex-wrap:wrap;align-items:flex-start;}.manager-service-page-info {flex-direction:column;align-items:flex-start;gap:12px;}.manager-service-page-buttons {margin-left:auto;}
+ .manager-service-detail-grid {gap:18px;font-size:12px;}
+ .manager-bookings [role='dialog'] form {grid-template-columns:1fr;}
+ .manager-history-search-card {padding:18px;}.manager-history-search {flex-direction:column;align-items:stretch;gap:12px;width:100%;flex-basis:100%;}
+ .manager-history-search input {font-size:11px;}.manager-history-empty {padding:64px 18px;}.manager-history-empty h2 {font-size:27px;}
+}

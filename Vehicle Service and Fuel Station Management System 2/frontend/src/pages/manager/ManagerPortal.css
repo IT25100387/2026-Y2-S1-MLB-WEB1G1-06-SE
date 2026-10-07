@@ -1,0 +1,98 @@
+@import './ManagerSteelTheme.css';
+
+.manager-portal {
+  --color-brand-accent:#d6aa6c; --color-brand-surface:#171813; --color-brand-dark:#171813; --color-brand-border:#32342a;
+  min-height:100dvh; background:#0c0d0a; color:#eeeee6;
+}
+.manager-portal * {box-sizing:border-box;}
+.manager-portal button,.manager-portal a {transition:color .18s,background-color .18s,border-color .18s,transform .18s;}
+.manager-portal button:focus-visible,.manager-portal a:focus-visible {outline:2px solid #d6aa6c;outline-offset:4px;}
+.manager-header {position:sticky;top:0;z-index:80;background:#11120feb;backdrop-filter:blur(20px);border-bottom:1px solid #d6aa6c16;}
+.manager-header-inner {max-width:1680px;margin:auto;padding:0 28px;height:80px;display:flex;align-items:center;justify-content:space-between;gap:22px;}
+.manager-logo {font-size:23px;font-weight:900;letter-spacing:.02em;white-space:nowrap;color:#f0f0e9;}
+.manager-logo span {color:#d6aa6c;}
+.manager-desktop-nav {display:flex;gap:22px;align-items:center;}
+.manager-nav-link {display:flex;align-items:center;gap:8px;padding:18px 0;color:#adaf9e;text-transform:uppercase;font-size:10px;font-weight:750;letter-spacing:.07em;white-space:nowrap;}
+.manager-nav-link:hover,.manager-nav-link.is-active {color:#dfb980;}
+.manager-nav-link > i {font-size:8px;transition:transform .18s;}
+.manager-nav-link > i.is-open {transform:rotate(180deg);}
+.manager-dropdown-position {position:absolute;top:80px;left:0;right:0;display:flex;justify-content:center;padding:0 24px;pointer-events:none;}
+.manager-menu-lists {width:min(100%,900px);display:grid;gap:24px;background:#1b1d16;border:1px solid #d6aa6c25;border-radius:16px;padding:24px;box-shadow:0 24px 80px #0009;pointer-events:auto;}
+.manager-list-count-1 {max-width:320px;grid-template-columns:1fr;}
+.manager-list-count-2 {max-width:670px;grid-template-columns:repeat(2,minmax(0,1fr));}
+.manager-list-count-3 {grid-template-columns:repeat(3,minmax(0,1fr));}
+.manager-menu-list + .manager-menu-list {border-left:1px solid #d6aa6c14;padding-left:24px;}
+.manager-menu-list h2 {margin:0 0 14px;padding:4px 10px;color:#c1a373;font-size:9px;font-weight:750;text-transform:uppercase;letter-spacing:.14em;}
+.manager-menu-list a {display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 10px;border-radius:9px;font-size:12px;line-height:1.4;color:#dcdfcd;}
+.manager-menu-list a:hover,.manager-menu-list a.is-active {background:#d6aa6c12;color:#ebc591;}
+.manager-menu-list a > i {font-size:9px;color:#a69b76;}
+.manager-header-actions {display:flex;gap:12px;align-items:center;flex-shrink:0;}
+.manager-account-area .bg-brand-accent {color:#241b0d;box-shadow:none;}
+.manager-account-area [class~='bg-[#141414]'] {background:#1a1c15;border-color:#d6aa6c22;}
+.manager-account-area [class~='bg-[#1a1a1a]'] {background:#1c1f16;}
+.manager-account-area [class*='hover:bg-[#1a1a1a]']:hover {background:#24271c;}
+.manager-account-area .border {border-color:#3c402e;}
+.manager-account-area .border-b,.manager-account-area .border-t {border-color:#d6aa6c15;}
+.manager-header-actions > .relative > div.absolute {background:#1a1c15;border-color:#d6aa6c22;}
+.manager-nav-backdrop {position:fixed;inset:0;z-index:70;background:#05060360;backdrop-filter:blur(7px);cursor:default;}
+.manager-main,.manager-footer {transition:filter .18s;}
+.manager-nav-open .manager-main,.manager-nav-open .manager-footer {filter:blur(7px);pointer-events:none;}
+.manager-main {max-width:1600px;margin:auto;padding:36px 32px 64px;min-height:65vh;}
+.manager-home-content {--color-brand-accent:#e52e2e;--color-brand-surface:#141414;--color-brand-dark:#141414;--color-brand-border:#333333;padding:32px;min-height:0;color:#e5e5e5;}
+.manager-home-route {background:#0a0a0a;}
+.manager-content h1 {font-size:clamp(28px,3vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1.2;text-transform:none;overflow-wrap:anywhere;}
+.manager-content h2 {font-weight:750;letter-spacing:-.025em;text-transform:none;}
+.manager-content .text-gray-500 {color:#999e88;}
+.manager-content .text-gray-400 {color:#aeb49c;}
+.manager-content .btn-accent {color:#251d10;font-weight:750;box-shadow:none;}
+.manager-content .bg-brand-accent {color:#251d10;}
+.manager-content .btn-accent:hover {background:#e3ba81;box-shadow:0 6px 20px #d6aa6c12;}
+.manager-content .btn-accent:disabled {opacity:.45;}
+.manager-content .input-dark {background:#11130e;border-color:#3b402d;color:#eeeee6;}
+.manager-content .input-dark::placeholder {color:#969d84;}
+.manager-content .input-dark:focus {border-color:#d6aa6c;box-shadow:0 0 0 2px #d6aa6c20;}
+.manager-content .card-dark,.manager-content [class~='bg-[#141414]'],.manager-content [class~='bg-[#111]'] {background:#171a12;border-color:#343a28;box-shadow:none;}
+.manager-content [class~='bg-[#0a0a0a]'] {background:#10120d;}
+.manager-content [class~='border']:has(table),.manager-content div.overflow-x-auto {border:none;background:#171a12;border-radius:12px;}
+.manager-content table,.manager-content table tr,.manager-content table td {border:0;}
+.manager-content table thead {background:#22271b;color:#b4b69d;}
+.manager-content table th {padding:18px 16px;font-size:9px;font-weight:700;}
+.manager-content table tbody tr:nth-child(even) {background:#ffffff02;}
+.manager-content table tbody tr:hover {background:#d6aa6c08;}
+.manager-content table td {padding:22px 16px;font-size:12px;}
+.manager-content table td a {color:#e0b783;}
+.manager-content [role='dialog'] {background:#1a1d14;border-color:#d6aa6c28;box-shadow:0 24px 100px #0009;}
+.manager-content [class~='accent-red-500'] {accent-color:#d6aa6c;}
+.manager-content section[id] {scroll-margin-top:108px;}
+.manager-content #pump-history {min-height:calc(100dvh - 180px);}
+.manager-content [data-fuel-section]:not([data-fuel-section='pump-settings']) #pump-settings .fixed[class~='z-[60]'],
+.manager-content [data-fuel-section]:not([data-fuel-section='pump-history']) #pump-history .fixed[class~='z-[60]'] {display:none;}
+.manager-fuel-section {padding-top:8px;}
+.manager-fuel-section > h2 {font-size:24px;margin-bottom:20px;}
+.manager-fuel-intro {color:#aeb49c;font-size:12px;line-height:1.6;margin-bottom:24px;}
+.manager-content .manager-pump-settings h1 {font-size:24px;}
+.manager-footer {width:calc(100% - 64px);max-width:1536px;margin:auto;padding:28px 0 32px;border-top:1px solid #d6aa6c12;display:flex;justify-content:space-between;gap:20px;font:9px monospace;letter-spacing:.05em;color:#929a7e;}
+.manager-footer button {color:#d2d6c0;}
+.manager-footer i {margin-left:12px;color:#d6aa6c;}
+.manager-mobile-toggle {display:none;width:28px;height:40px;}
+.manager-mobile-nav {display:none;}
+body:has(.manager-portal:not(.manager-home-route)) [aria-labelledby='confirmation-title'],body:has(.manager-portal:not(.manager-home-route)) [aria-live='polite'] {--color-brand-accent:#d6aa6c;}
+body:has(.manager-portal:not(.manager-home-route)) [aria-labelledby='confirmation-title'] {background:#1b1f14;border-color:#d6aa6c30;}
+body:has(.manager-portal:not(.manager-home-route)) [aria-labelledby='confirmation-title'] .btn-accent {color:#241c10;}
+body:has(.manager-nav-open) [aria-live='polite'] {filter:blur(7px);}
+@media(max-width:1250px){
+ .manager-desktop-nav {display:none;}.manager-mobile-toggle {display:block;}
+ .manager-mobile-nav {display:flex;flex-direction:column;padding:8px 24px 20px;max-height:calc(100dvh - 80px);overflow-y:auto;}
+ .manager-mobile-nav .manager-nav-link {width:100%;justify-content:space-between;}
+ .manager-mobile-submenu .manager-menu-lists {width:100%;max-width:none;box-shadow:none;}
+ .manager-mobile-submenu .manager-menu-lists {grid-template-columns:1fr;gap:18px;padding:18px;}
+ .manager-mobile-submenu .manager-menu-list + .manager-menu-list {border-left:0;border-top:1px solid #d6aa6c14;padding:18px 0 0;}
+}
+@media(max-width:700px){
+ .manager-header-inner {padding:0 16px;gap:14px;}.manager-logo {font-size:21px;}.manager-header-actions {gap:10px;}
+ .manager-content {padding:28px 16px 40px;}.manager-footer {width:calc(100% - 32px);margin:0 16px;}
+ .manager-account-area .fixed {max-width:calc(100vw - 32px);max-height:calc(100dvh - 112px);overflow-y:auto;}
+ .manager-header-actions > .relative > div.absolute {position:fixed;top:80px;right:16px;max-width:calc(100vw - 32px);}
+}
+@media(max-width:639px){.manager-home-content {padding:16px;}}
+@media(prefers-reduced-motion:reduce){.manager-portal button,.manager-portal a,.manager-main,.manager-footer {transition:none;}}

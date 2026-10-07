@@ -1,0 +1,29 @@
+import {Input,Select} from '../../components/Validation';
+import {useEffect,useRef,useState} from 'react';
+import {Link,useSearchParams} from 'react-router-dom';
+import {motion,useReducedMotion} from 'framer-motion';
+import {api,requestKey,notice} from '../../lib/api';
+import {SearchBar,Modal,Field,money} from '../../components/DataUI';
+import {OfferMark,CatalogPhoto,CatalogPagination} from '../../components/CustomerCatalogUI';
+
+export default function CustomerStore(){
+  const [parts,setParts]=useState([]),[query,setQuery]=useState(''),[category,setCategory]=useState('All'),[page,setPage]=useState(1),[size,setSize]=useState(15),[selected,setSelected]=useState(null),[quantity,setQuantity]=useState(1),[method,setMethod]=useState('CARD'),[busy,setBusy]=useState(false),[error,setError]=useState(''),[purchaseError,setPurchaseError]=useState(''),[loading,setLoading]=useState(true);
+  const key=useRef(null),reduced=useReducedMotion(),[params,setParams]=useSearchParams(),offersOnly=params.get('offers')==='true';
+  const load=async()=>{try{setParts(await api('/api/v1/customer/store'));setError('');}catch(e){setError(e.message);}finally{setLoading(false);}};
+  useEffect(()=>{load();},[]);
+  const buy=async e=>{e.preventDefault();setPurchaseError('');if(!Number.isInteger(Number(quantity))||Number(quantity)<1||Number(quantity)>selected.stockQuantity)return setPurchaseError('Enter a whole quantity within available stock');setBusy(true);try{const result=await api('/api/v1/customer/store/purchase',{method:'POST',headers:{'Idempotency-Key':key.current},body:JSON.stringify({partId:selected.id,quantity:Number(quantity),paymentMethod:method})});notice(`Purchase saved ? ${result.invoice.invoiceNumber}`);setSelected(null);await load();}catch(e){setPurchaseError(e.message);}finally{setBusy(false);}};
+  const open=part=>{setSelected(part);setQuantity(1);setMethod('CARD');setPurchaseError('');key.current=requestKey();};
+  const rows=parts.filter(part=>(category==='All'||part.category===category)&&(!offersOnly||part.discountPercentage>0)&&`${part.partName} ${part.category}`.toLowerCase().includes(query.toLowerCase()));
+  const categories=['All',...new Set(parts.map(part=>part.category).filter(Boolean))],current=Math.min(page,Math.max(1,Math.ceil(rows.length/size)));
+  return <div className="customer-catalog"><div className="customer-page-header"><p className="customer-eyebrow">The essentials, within reach</p><h1>Spare parts store</h1><p>Browse the parts available at our counter. Current offers are marked, with your discounted price shown up front.</p></div>
+    <div className="customer-catalog-toolbar"><SearchBar onSearch={value=>{setQuery(value);setPage(1);}}/><button className={`customer-filter ${offersOnly?'is-active':''}`} aria-pressed={offersOnly} onClick={()=>{setParams(offersOnly?{}:{offers:'true'});setPage(1);}}><i aria-hidden="true" className="fa-solid fa-tag"/>Offers only</button></div>
+    <div className="customer-category-tabs">{categories.map(value=><button key={value} className={category===value?'is-active':''} aria-pressed={category===value} onClick={()=>{setCategory(value);setPage(1);}}>{value}</button>)}</div>
+    {error&&<p role="alert" className="customer-error">{error}<button onClick={load}>Retry</button></p>}
+    {loading?<p className="customer-loading">Loading the parts counter...</p>:rows.length?<><div className="customer-catalog-cards customer-parts-cards">{rows.slice((current-1)*size,current*size).map((part,index)=><motion.article className="customer-product-card" key={part.id} initial={reduced?false:{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{duration:.2,delay:index*.03}}>
+      <div className="customer-product-media"><CatalogPhoto src={part.imageUrl||part.photoUrl} fallback="/landing-parts-essentials.jpg" alt={part.imageUrl||part.photoUrl?part.partName:'parts counter'}/><OfferMark discount={part.discountPercentage}/></div>
+      <div className="customer-product-copy"><p className="customer-product-category">{part.category}<span>{part.stockQuantity} in stock</span></p><h2>{part.partName}</h2><div className="customer-product-bottom"><div><small>Your price</small><strong>Rs. {money(part.price)}</strong>{part.discountPercentage>0&&<del>Rs. {money(part.sellingPrice)}</del>}</div><button className="btn-accent customer-card-button" onClick={()=>open(part)} aria-label={'Buy part: '+part.partName}>Buy part<i aria-hidden="true" className="fa-solid fa-arrow-right"/></button></div></div>
+    </motion.article>)}</div><CatalogPagination total={rows.length} page={current} setPage={setPage} size={size} setSize={setSize}/></>:!error&&<div className="customer-empty">No parts match your filters. Try another category or turn off Offers only.</div>}
+    <p className="customer-store-note">Your purchases are saved in <Link to="/customer/invoices">Invoices</Link> and <Link to="/customer/payments">Payment history</Link>.</p>
+    {selected&&<Modal title="Buy spare part" onClose={()=>{if(!busy)setSelected(null);}}><form noValidate onSubmit={buy} className="space-y-5"><p className="font-bold">{selected.partName}</p><Field label="Quantity" error={purchaseError}><Input validationKey="quantity" type="number" min="1" max={Math.min(selected.stockQuantity,9999)} step="1" className="input-dark w-full p-3" value={quantity} onChange={e=>{setQuantity(e.target.value);key.current=requestKey();}}/></Field><Field label="Payment method"><Select validationKey="method" className="input-dark w-full p-3" value={method} onChange={e=>{setMethod(e.target.value);key.current=requestKey();}}>{['CARD','QR','BANK'].map(value=><option key={value}>{value}</option>)}</Select></Field><p className="font-bold">Total: Rs. {money(selected.price*Number(quantity))}</p><button disabled={busy} className="btn-accent px-6 py-3 rounded-full text-xs">{busy?'Saving purchase...':'Confirm purchase'}</button></form></Modal>}
+  </div>;
+}

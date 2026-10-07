@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #0a0a0a; /* Matte Black */
+  --color-brand-surface: #141414;
+  --color-brand-border: #333333;
+  --color-brand-dark: #141414; /* Dark flat grey */
+  --color-brand-gray: #262626; /* Border grey */
+  --color-brand-accent: #e52e2e; /* Sharp Red */
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-black);
+    color: #e5e5e5;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    overflow-x: hidden;
+    color-scheme: dark; /* Fixes native datepicker/calendar styling */
+  }
+  
+  option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  option:checked, option:hover, option:focus {
+    background: #333333 linear-gradient(0deg, #333333 0%, #333333 100%);
+    color: #ffffff;
+  }
+  
+  select {
+    color-scheme: dark;
+  }
+  
+  button, 
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+}
+
+/* Minimalist Modern Cards */
+.card-dark {
+  background: var(--color-brand-dark);
+  border: 1px solid var(--color-brand-gray);
+  border-radius: 1.5rem; /* Modern rounded corners */
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); /* Soft modern shadow */
+  transition: all 0.3s ease;
+}
+.card-dark:hover {
+  border-color: #333333;
+}
+
+/* Inputs */
+.input-dark {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid var(--color-brand-gray);
+  border-radius: 0.75rem; /* Rounded inputs */
+  transition: all 0.2s ease;
+}
+.input-dark:focus {
+  border-color: var(--color-brand-gray);
+  box-shadow: 0 0 0 1px var(--color-brand-gray);
+  outline: none;
+}
+select.input-dark {
+  appearance: none;
+  cursor: pointer;
+}
+.input-dark:hover:not(:focus) {
+  border-color: #444;
+}
+
+/* Buttons */
+.btn-accent {
+  background: var(--color-brand-accent);
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.75rem; /* Rounded buttons */
+  transition: all 0.2s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-accent:hover {
+  background: #cc2222;
+  box-shadow: 0 4px 15px rgba(229, 46, 46, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #a3a3a3;
+  border: 1px solid var(--color-brand-gray);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.75rem; /* Rounded buttons */
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-outline:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.btn-outline.active {
+  border-color: var(--color-brand-accent);
+  color: var(--color-brand-accent);
+}
+
+/* Modern Data Grid Styling */
+.table-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-grid th {
+  background: transparent;
+  color: #737373;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--color-brand-gray);
+  text-align: left;
+}
+.table-grid th.text-right {
+  text-align: right;
+}
+.table-grid td {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #1a1a1a;
+  color: #e5e5e5;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.table-grid tr {
+  transition: background 0.2s ease;
+}
+.table-grid tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-brand-black); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Blur quick deck when dropdown is open */
+body.nav-dropdown-active .z-\[60\] {
+  filter: blur(8px) !important;
+  opacity: 0.5 !important;
+  transition: all 0.3s ease !important;
+  pointer-events: none !important;
+}
+
+/* Keep icon actions usable if a font asset is still loading. */
+button[aria-label]:has(> i:only-child) {
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  text-align: center;
+}

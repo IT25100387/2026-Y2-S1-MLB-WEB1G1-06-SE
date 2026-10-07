@@ -1,0 +1,172 @@
+/* Yellow/black Manager operations theme. Overview and other roles retain their palette. */
+.manager-portal:not(.manager-home-route) {
+  --manager-accent:#f28c18;
+  --manager-accent-hover:#ffa13d;
+  --manager-accent-ink:#9a4b0c;
+  --manager-background:#f8fafc;
+  --manager-panel:#ffffff;
+  --manager-input:#ffffff;
+  --manager-line:#dce1e6;
+  --manager-muted:#475569;
+  --manager-text:#111111;
+  --color-brand-accent:var(--manager-accent-ink);
+  --color-brand-surface:var(--manager-panel);
+  --color-brand-dark:var(--manager-panel);
+  --color-brand-border:var(--manager-line);
+  --color-brand-gray:var(--manager-line);
+  background:var(--manager-background);
+  color:var(--manager-text);
+}
+.manager-portal:not(.manager-home-route) :is(button,a):focus-visible {outline-color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-header {background:#111111ed;border-color:#f28c1825;}
+.manager-portal:not(.manager-home-route) .manager-logo {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-logo span {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-nav-link {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-nav-link:is(:hover,.is-active) {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-menu-lists {background:#191919;border-color:#f28c1830;border-radius:10px;}
+.manager-portal:not(.manager-home-route) .manager-menu-list + .manager-menu-list {border-color:#f28c1820;}
+.manager-portal:not(.manager-home-route) .manager-menu-list h2 {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-menu-list a {color:var(--manager-text);border-radius:6px;}
+.manager-portal:not(.manager-home-route) .manager-menu-list a:is(:hover,.is-active) {background:#f28c1815;color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-menu-list a > i {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-nav-backdrop {background:#11111166;}
+.manager-portal:not(.manager-home-route) .manager-footer {color:#64748b;border-color:#f28c1820;}
+.manager-portal:not(.manager-home-route) .manager-footer button {color:#334155;}
+.manager-portal:not(.manager-home-route) .manager-footer i {color:var(--manager-accent-ink);}
+
+/* Light surfaces and borderless grids: status colours remain semantic. */
+.manager-portal:not(.manager-home-route) .manager-content :is(.card-dark,[class~='bg-[#141414]'],[class~='bg-[#111]'],[class~='bg-[#1a1a1a]']) {background:var(--manager-panel);border-color:var(--manager-line);box-shadow:none;}
+.manager-portal:not(.manager-home-route) .manager-content [class~='bg-[#0a0a0a]'] {background:var(--manager-input);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.text-gray-400,.text-gray-500) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content .text-gray-300 {color:#334155;}
+.manager-portal:not(.manager-home-route) .manager-content .btn-accent {background:var(--manager-accent);color:#111111;box-shadow:none;border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content .btn-accent:hover {background:var(--manager-accent-hover);box-shadow:0 5px 18px #0002;}
+.manager-portal:not(.manager-home-route) .manager-content .bg-brand-accent {color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-content .input-dark {background:var(--manager-input);border-color:var(--manager-line);color:var(--manager-text);border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content .input-dark::placeholder {color:#64748b;}
+.manager-portal:not(.manager-home-route) .manager-content .input-dark:focus {border-color:var(--manager-accent-ink);box-shadow:0 0 0 2px #f28c1822;}
+.manager-portal:not(.manager-home-route) .manager-content .input-dark[aria-invalid='true'] {border-color:#9a4b0c;}
+.manager-portal:not(.manager-home-route) .manager-content select option {background:var(--manager-panel);color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content [class~='accent-red-500'] {accent-color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is([class~='border']:has(table),div.overflow-x-auto) {border:0;background:var(--manager-panel);border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content table thead {background:#e9edf1;color:#334155;}
+.manager-portal:not(.manager-home-route) .manager-content table tbody tr:nth-child(even) {background:#f28c1805;}
+.manager-portal:not(.manager-home-route) .manager-content table tbody tr:hover {background:#f28c1810;}
+.manager-portal:not(.manager-home-route) .manager-content table td a {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-service-action,.manager-invoice-action) {background:#f28c180d;color:var(--manager-accent-ink);border-radius:6px;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-service-action,.manager-invoice-action):hover {background:#f28c1824;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-service-row-options,.manager-invoice-row-options) .is-active {color:var(--manager-accent-ink);box-shadow:inset 0 -2px var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-service-kicker,.manager-service-search button:not([type='button']),.manager-service-select i,.manager-service-id,.manager-service-detail-ref,.manager-history-clear-input,.manager-history-results > span,.manager-invoice-kicker,.manager-invoice-search button:not([type='button']),.manager-invoice-select i,.manager-invoice-reset,.manager-invoice-payment-id,.manager-invoice-payment-balance strong,.manager-inventory-price) {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-service-search button[type='button'],.manager-service-meta,.manager-service-empty,.manager-service-pagination,.manager-service-detail-grid dt,.manager-service-detail-notes h3,.manager-history-empty p,.manager-history-loading,.manager-invoice-balance,.manager-invoice-search button[type='button'],.manager-invoice-date-range span,.manager-invoice-reference,.manager-invoice-remaining,.manager-invoice-empty,.manager-invoice-pagination,.manager-invoice-payment-id span,.manager-invoice-payment-balance span) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-history-search-card,.manager-history-empty,.manager-inventory-empty,.manager-fuel-empty,.manager-fuel-summary > div) {background:var(--manager-panel);border-radius:10px;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-invoice-payment-balance {background:var(--manager-input);border-radius:8px;}
+
+/* All edit/create/view dialogs use the same panel, fields and restrained outline. */
+.manager-portal:not(.manager-home-route) .manager-content [role='dialog'] {background:#ffffff;color:var(--manager-text);border-color:#f28c1855;border-radius:10px;box-shadow:0 28px 90px #0009;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-backdrop {background:#111111eb;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-modal > header p {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-inventory-modal > header button,.manager-inventory-fields label > span:first-child,.manager-inventory-stock > div > span,.manager-inventory-stock > p:not(.manager-inventory-error),.manager-inventory-goods h3,.manager-inventory-selected > p,.manager-inventory-goods-options > p,.manager-inventory-details-intro) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-inventory-stock,.manager-inventory-goods) {background:#f28c1808;border-color:#f28c1825;border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-stock [role='group'] {background:var(--manager-input);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-stock button.is-active {background:var(--manager-accent);color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-inventory-select > i,.manager-inventory-stock > p > span,.manager-inventory-goods-details i) {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-modal footer {border-color:#f28c1820;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-goods-options label {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-goods-options label input {accent-color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-inventory-selected button,.manager-inventory-goods-details li) {background:#f28c1812;color:#334155;}
+.manager-portal:not(.manager-home-route) .manager-content .item-photo-editor {background:#f28c1809;border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.item-photo-editor label > span,.item-photo-editor p) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content .item-photo-editor input {color:#334155;}
+.manager-portal:not(.manager-home-route) .manager-content .item-photo-editor input::file-selector-button {background:#f28c1820;color:#334155;}
+
+/* Inventory, catalogue and forecourt retain their existing information and controls. */
+.manager-portal:not(.manager-home-route) .manager-content .manager-tank-card {background:var(--manager-panel);border-color:#f28c1820;border-radius:10px;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-tank-card:hover {border-color:#f28c1860;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-tank-meter > span {background:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-tank-meter.is-low > span {background:#e5b575;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-tank-volume strong {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-tank-top > span:first-child,.manager-tank-volume small,.manager-tank-volume > span,.manager-tank-level,.manager-tank-supplier) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-item-card {background:var(--manager-panel);border-radius:10px;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-catalog-media {background:#e9edf1;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-catalog-discount {background:var(--manager-accent);color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-catalog-popular {background:#111111dd;color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-item-category,.manager-item-meta,.manager-item-meta strong,.manager-catalog-icon) {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-item-description,.manager-item-meta del,.manager-item-secondary,.manager-catalog-view button,.manager-icon-heading,.manager-popular-choice small,.manager-offer-preview p) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-item-footer {border-color:#f28c1818;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-catalog-view,.manager-catalog-icon,.manager-popular-choice,.manager-offer-preview) {background:#f28c1810;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-catalog-view .is-active,.manager-icon-options button.is-active) {background:var(--manager-accent);color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-icon-options button {background:#f28c180c;border-color:#f28c1825;color:#334155;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-popular-choice {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-popular-choice input {accent-color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-fuel-heading > p {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-fuel-heading > p::before {background:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-fuel-description,.manager-fuel-intro,.manager-pump-heading p,.manager-pump-state > span,.manager-pump-state small,.manager-pump-inputs label > span:first-child,.manager-pump-draft,.manager-pump-confirmed span,.manager-fuel-footnote,.manager-fuel-empty p,.manager-fuel-summary p,.manager-fuel-cell-detail) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-fuel-description strong {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-pump-heading {border-color:#f28c1824;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-pump-icon {background:#f28c1815;color:var(--manager-accent-ink);border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-pump-state {background:var(--manager-input);border-color:var(--manager-line);border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-pump-toggle {background:#9ca3af;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-pump-toggle[aria-checked='true'] {background:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-content .manager-pump-confirmed {background:#f28c1812;color:var(--manager-accent-ink);border-radius:8px;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.manager-pump-draft:hover,.manager-fuel-summary strong) {color:var(--manager-accent-ink);}
+
+/* Account menu and notifications inherit this theme only in Manager operations. */
+.manager-portal:not(.manager-home-route) .fuelcore-account-menu {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-trigger {background:var(--manager-panel);border-color:var(--manager-line);color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-trigger:is(:hover,[aria-expanded='true']) {background:#202020;border-color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-avatar {background:var(--manager-accent);color:#111111;}
+.manager-portal:not(.manager-home-route) .fuelcore-account-dropdown {background:#ffffff;border-color:#f28c1835;border-radius:10px;scrollbar-color:#9ca3af transparent;}
+.manager-portal:not(.manager-home-route) :is(.fuelcore-account-trigger > i,.fuelcore-account-summary small,.fuelcore-account-icon,.fuelcore-account-work > p,.fuelcore-account-signout) {color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-summary span:not(.fuelcore-account-avatar) {color:var(--manager-muted);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-menu .fuelcore-account-dropdown nav a {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-menu .fuelcore-account-dropdown nav a:hover {background:#f28c1814;color:var(--manager-accent-ink);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-icon {background:#f28c1812;}
+.manager-portal:not(.manager-home-route) .fuelcore-account-dropdown nav a > i {color:#64748b;}
+.manager-portal:not(.manager-home-route) .fuelcore-account-signout:hover {color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-header-actions > .relative > div.absolute {background:#ffffff;border-color:#f28c1830;}
+.manager-portal:not(.manager-home-route) .manager-header .bg-brand-accent {color:#111111;}
+
+/* Confirmation and toast layers live outside the Manager portal DOM. */
+body:has(.manager-portal:not(.manager-home-route)) :is([role='dialog'][aria-labelledby='confirmation-title'],[aria-live='polite'][class]) {--color-brand-accent:#9a4b0c;}
+body:has(.manager-portal:not(.manager-home-route)) [role='dialog'][aria-labelledby='confirmation-title'] {background:#ffffff;border-color:#f28c1855;border-radius:10px;color:#111111;}
+body:has(.manager-portal:not(.manager-home-route)) [role='dialog'][aria-labelledby='confirmation-title'] .btn-accent {background:#f28c18;color:#111111;border-radius:8px;}
+body:has(.manager-portal:not(.manager-home-route)) [aria-labelledby='confirmation-title'] .btn-accent:hover {background:#ffa13d;}
+body:has(.manager-portal:not(.manager-home-route)) [aria-live='polite'] > div {background:#ffffff;border-color:#dce1e6;color:#111111;border-radius:8px;}
+
+/* Dark navigation, light working area: yellow text only sits on dark surfaces. */
+.manager-portal:not(.manager-home-route) {color-scheme:light;}
+.manager-portal:not(.manager-home-route) .manager-content select {color-scheme:light;}
+.manager-portal:not(.manager-home-route) :is(button,a):focus-visible {outline-color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-header {--color-brand-accent:#f28c18;color:#f8fafc;}
+.manager-portal:not(.manager-home-route) .manager-logo {color:#f8fafc;}
+.manager-portal:not(.manager-home-route) .manager-logo span {color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-nav-link {color:#d1d5db;}
+.manager-portal:not(.manager-home-route) .manager-nav-link:is(:hover,.is-active) {color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-menu-list h2 {color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-menu-list a {color:#f8fafc;}
+.manager-portal:not(.manager-home-route) .manager-menu-list a:is(:hover,.is-active) {color:#ffa13d;}
+.manager-portal:not(.manager-home-route) .manager-menu-list a > i {color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .manager-content .text-white {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content [class~='hover:text-white']:hover {color:var(--manager-text);}
+.manager-portal:not(.manager-home-route) .manager-content .bg-brand-accent {background:var(--manager-accent);color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-content [class~='border-[#262626]'] {border-color:var(--manager-line);}
+.manager-portal:not(.manager-home-route) .manager-content [class~='bg-[#0a0a0a]/90'] {background:#fffffff2;border-color:var(--manager-line);box-shadow:0 20px 50px #11111126;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.text-green-500,.text-green-400) {color:#15803d;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.text-red-500,.text-red-400) {color:#b91c1c;}
+.manager-portal:not(.manager-home-route) .manager-content :is(.text-blue-500,.text-blue-400) {color:#1d4ed8;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-badge.is-positive {color:#15803d;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-badge.is-warning {color:#9a4b0c;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-badge.is-neutral {color:#475569;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-inventory-error {color:#9a6700;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-payment-refunded {color:#7e22ce;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-invoice-paid {color:#15803d;}
+.manager-portal:not(.manager-home-route) .manager-content .manager-catalog-popular {color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-dropdown :is(.fuelcore-account-work,.fuelcore-account-signout) {border-color:var(--manager-line);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-trigger {background:#202020;color:#f8fafc;border-color:#424242;}
+.manager-portal:not(.manager-home-route) .fuelcore-account-trigger:is(:hover,[aria-expanded='true']) {color:#f8fafc;}
+.manager-portal:not(.manager-home-route) .fuelcore-account-trigger > i {color:var(--manager-accent);}
+.manager-portal:not(.manager-home-route) .fuelcore-account-error {color:#b91c1c;}
+.manager-portal:not(.manager-home-route) .manager-header-actions > .relative > div.absolute {--color-brand-accent:#9a4b0c;color:#111111;}
+.manager-portal:not(.manager-home-route) .manager-header-actions > .relative > div.absolute :is(.text-gray-400,.text-gray-500) {color:#475569;}
+.manager-portal:not(.manager-home-route) .manager-header-actions > .relative > div.absolute button:hover {background:#f28c1815;}
+body:has(.manager-portal:not(.manager-home-route)) [role='dialog'][aria-labelledby='confirmation-title'] .text-gray-300 {color:#475569;}

@@ -1,0 +1,78 @@
+[
+  {
+    "icon": "bolt",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/bolt.svg"
+  },
+  {
+    "icon": "car-battery",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/car-battery.svg"
+  },
+  {
+    "icon": "car",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/car.svg"
+  },
+  {
+    "icon": "circle-dot",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/circle-dot.svg"
+  },
+  {
+    "icon": "droplet",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/droplet.svg"
+  },
+  {
+    "icon": "fan",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/fan.svg"
+  },
+  {
+    "icon": "filter",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/filter.svg"
+  },
+  {
+    "icon": "gas-pump",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gas-pump.svg"
+  },
+  {
+    "icon": "gear",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gear.svg"
+  },
+  {
+    "icon": "gears",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gears.svg"
+  },
+  {
+    "icon": "laptop-medical",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/laptop-medical.svg"
+  },
+  {
+    "icon": "lightbulb",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/lightbulb.svg"
+  },
+  {
+    "icon": "magnifying-glass",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/magnifying-glass.svg"
+  },
+  {
+    "icon": "oil-can",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/oil-can.svg"
+  },
+  {
+    "icon": "rotate",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/rotate.svg"
+  },
+  {
+    "icon": "screwdriver-wrench",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/screwdriver-wrench.svg"
+  },
+  {
+    "icon": "shield-halved",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/shield-halved.svg"
+  },
+  {
+    "icon": "temperature-half",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/temperature-half.svg"
+  },
+  {
+    "icon": "wind",
+    "source": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/wind.svg"
+  }
+]

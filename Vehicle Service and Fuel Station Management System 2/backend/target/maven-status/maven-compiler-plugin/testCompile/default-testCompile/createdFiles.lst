@@ -1,0 +1,10 @@
+com\fuelstation\ConnectedWorkflowTest.class
+com\fuelstation\CashierPOSTest$MutableClock.class
+com\fuelstation\CatalogPhotosTest.class
+com\fuelstation\ConnectedWorkflowTest$MutableClock.class
+com\fuelstation\controller\InputValidationHttpTest.class
+com\fuelstation\InputValidationTest.class
+com\fuelstation\CashierPOSTest$TimeConfig.class
+com\fuelstation\CashierPOSTest.class
+com\fuelstation\controller\VehicleValidationTest.class
+com\fuelstation\ConnectedWorkflowTest$TimeConfig.class

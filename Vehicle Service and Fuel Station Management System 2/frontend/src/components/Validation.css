@@ -1,0 +1,6 @@
+.required-mark {color:#ff7777!important;font:inherit;white-space:nowrap;}
+.field-validation-error {display:block;margin-top:6px;color:#ff7777!important;font-size:11px;font-weight:500;line-height:1.6;letter-spacing:normal;text-transform:none;overflow-wrap:anywhere;}
+:is(.unified-portal,.fuelcore-signin,.cashier-portal,.customer-portal,.mechanic-portal,.manager-portal,.admin-portal) :is(p,span,div)[role='alert'] {color:#ff7777!important;}
+:is(.unified-portal,.fuelcore-signin,.cashier-portal,.customer-portal,.mechanic-portal,.manager-portal,.admin-portal) :is(input,textarea,select)[aria-invalid='true'] {border-color:#ef5555!important;}
+.cashier-portal :is(.required-mark,.field-validation-error,[role='alert']) {color:#b4232d!important;}
+form:has(.field-validation-error) .field-validation-error {max-width:100%;}

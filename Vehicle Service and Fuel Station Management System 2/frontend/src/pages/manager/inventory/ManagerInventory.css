@@ -1,0 +1,76 @@
+.manager-inventory {min-width:0;}
+.manager-inventory-error {color:#e3bb83;font-size:12px;line-height:1.7;margin:14px 0;overflow-wrap:anywhere;}
+.manager-inventory-error button {margin-left:12px;text-decoration:underline;}
+.manager-inventory-empty {background:#171a12;padding:48px 20px;text-align:center;border-radius:16px;font-size:12px;color:#aeb49c;}
+.manager-inventory-badge {display:inline-block;border-radius:999px;padding:5px 10px;font-size:9px;font-weight:750;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;}
+.manager-inventory-badge.is-positive {background:#23b35b15;color:#65d68c;}
+.manager-inventory-badge.is-warning {background:#e2a55a15;color:#edbc7f;}
+.manager-inventory-badge.is-neutral {background:#7490a81a;color:#a4b5c2;}
+.manager-inventory-price {font-family:monospace;color:#dfb783;white-space:nowrap;}
+.manager-tank-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;}
+.manager-tank-card {min-width:0;padding:24px;background:radial-gradient(ellipse at top right,#d6aa6c0d,transparent 65%),#171a12;border:1px solid #d6aa6c12;border-radius:20px;transition:transform .2s,border-color .2s;}
+.manager-tank-card:hover {border-color:#d6aa6c40;transform:translateY(-2px);}
+.manager-tank-top {display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;}
+.manager-tank-top > span:first-child {font:10px monospace;color:#aeb49c;letter-spacing:.08em;}
+.manager-content .manager-tank-card h2 {min-height:46px;font-size:18px;font-weight:800;text-transform:uppercase;line-height:1.3;overflow-wrap:anywhere;margin-bottom:20px;}
+.manager-tank-volume {display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-bottom:14px;}
+.manager-tank-volume strong {font:750 24px monospace;color:#eeeee6;}
+.manager-tank-volume small {font-size:12px;color:#aeb49c;}
+.manager-tank-volume > span {font:9px monospace;color:#9ea68d;white-space:nowrap;}
+.manager-tank-meter {height:9px;border-radius:999px;background:#ffffff08;overflow:hidden;}
+.manager-tank-meter > span {display:block;height:100%;background:#d6aa6c;border-radius:inherit;transition:width .3s;}
+.manager-tank-meter.is-low > span {background:#e5b575;}
+.manager-tank-level {display:flex;justify-content:space-between;gap:12px;color:#aeb49c;font:9px monospace;text-transform:uppercase;margin-top:12px;line-height:1.7;}
+.manager-tank-level span:last-child {text-align:right;}
+.manager-tank-supplier {font-size:10px;color:#9ba68b;line-height:1.6;margin-top:18px;overflow-wrap:anywhere;}
+.manager-tank-actions {display:flex;gap:10px;margin-top:26px;}
+.manager-inventory .manager-service-table table {min-width:1180px;}
+.manager-inventory-suppliers .manager-service-table table {min-width:1380px;}
+.manager-inventory-backdrop {position:fixed;inset:0;z-index:100;background:#060703eb;backdrop-filter:blur(10px);display:flex;justify-content:center;align-items:center;padding:24px;}
+.manager-inventory-modal {width:100%;max-height:calc(100dvh - 48px);overflow-y:auto;border-radius:20px;background:#1a1d14;border:1px solid #d6aa6c26;padding:30px;box-shadow:0 28px 90px #0008;}
+.manager-inventory-modal-fuel {max-width:600px;}.manager-inventory-modal-parts {max-width:900px;}.manager-inventory-modal-suppliers {max-width:1140px;}.manager-inventory-modal-goods {max-width:720px;}
+.manager-inventory-modal > header {display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:28px;}
+.manager-inventory-modal > header p {color:#d6aa6c;font-size:9px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;}
+.manager-inventory-modal > header h2 {font-size:26px;line-height:1.3;overflow-wrap:anywhere;}
+.manager-inventory-modal > header button {color:#aeb49c;padding:6px;}
+.manager-inventory-modal fieldset {min-width:0;}
+.manager-inventory-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 24px;}
+.manager-inventory-modal-fuel .manager-inventory-fields {grid-template-columns:1fr;gap:20px;}
+.manager-inventory-modal-suppliers .manager-inventory-fields {grid-template-columns:repeat(3,minmax(0,1fr));}
+.manager-inventory-fields label {min-width:0;}
+.manager-inventory-fields label > span:first-child {font-size:9px;line-height:1.7;color:#aeb49c;letter-spacing:.08em;}
+.manager-inventory-modal .input-dark {width:100%;padding:12px 14px;border-radius:12px;font-size:12px;line-height:1.6;}
+.manager-inventory-modal .input-dark[aria-invalid='true'] {border-color:#dfb783;}
+.manager-inventory-select {position:relative;}
+.manager-inventory-select select {appearance:none;padding-right:34px!important;}
+.manager-inventory-select > i {position:absolute;right:14px;top:17px;font-size:9px;pointer-events:none;color:#d6aa6c;}
+.manager-inventory-stock {padding:14px;background:#d6aa6c05;border:1px solid #d6aa6c20;border-radius:12px;align-self:start;}
+.manager-inventory-stock > div:first-child {display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.manager-inventory-stock > div > span {font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#aeb49c;}
+.manager-inventory-stock [role='group'] {display:flex;gap:4px;background:#10120d;border-radius:7px;padding:3px;}
+.manager-inventory-stock button {padding:6px 10px;border-radius:5px;font-size:9px;text-transform:uppercase;}
+.manager-inventory-stock button.is-active {background:#d6aa6c;color:#241b0d;font-weight:700;}
+.manager-inventory-stock > p:not(.manager-inventory-error) {font-size:10px;color:#aeb49c;margin:10px 0 0;line-height:1.7;}
+.manager-inventory-stock > p > span {margin-left:14px;color:#e0b783;}
+.manager-inventory-modal footer {display:flex;justify-content:flex-end;align-items:center;gap:14px;border-top:1px solid #d6aa6c12;margin-top:28px;padding-top:24px;}
+.manager-inventory-submit {padding:13px 22px;border-radius:12px;font-size:11px;font-weight:750;text-transform:uppercase;}
+.manager-inventory-goods {margin-top:24px;padding:18px;border-radius:14px;background:#d6aa6c05;border:1px solid #d6aa6c20;}
+.manager-inventory-goods h3,.manager-inventory-selected > p {font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#aeb49c;font-weight:700;margin-bottom:14px;}
+.manager-inventory-goods-options {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-height:160px;overflow-y:auto;margin-top:16px;padding:4px 0;}
+.manager-inventory-goods-options label {display:flex;align-items:flex-start;gap:8px;color:#dce1cb;font-size:10px;line-height:1.6;cursor:pointer;min-width:0;}
+.manager-inventory-goods-options label input {accent-color:#d6aa6c;flex-shrink:0;margin-top:2px;width:14px;height:14px;}
+.manager-inventory-goods-options label span {overflow-wrap:anywhere;}
+.manager-inventory-goods-options > p {font-size:11px;color:#aeb49c;}
+.manager-inventory-selected {margin-top:18px;}
+.manager-inventory-selected > div {display:flex;flex-wrap:wrap;gap:8px;}
+.manager-inventory-selected button {display:flex;align-items:center;gap:10px;border-radius:8px;padding:6px 9px;background:#d6aa6c15;color:#e2c18e;font-size:10px;max-width:100%;overflow-wrap:anywhere;text-align:left;}
+.manager-inventory-other {display:flex;gap:10px;margin-top:16px;}
+.manager-inventory-other input {min-width:0;flex:1;}
+.manager-inventory-details-intro {color:#aeb49c;font-size:12px;margin-bottom:22px;}
+.manager-inventory-goods-details {display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px;}
+.manager-inventory-goods-details li {display:flex;align-items:flex-start;gap:12px;border-radius:12px;padding:14px;background:#d6aa6c06;color:#dfe3d2;overflow-wrap:anywhere;}
+.manager-inventory-goods-details i {color:#d6aa6c;margin-top:3px;}
+@media(max-width:1100px){.manager-tank-grid {grid-template-columns:repeat(2,minmax(0,1fr));}.manager-inventory-goods-options {grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:700px){.manager-inventory-backdrop {padding:16px;}.manager-inventory-modal {padding:22px;max-height:calc(100dvh - 32px);}.manager-inventory-modal-suppliers .manager-inventory-fields {grid-template-columns:repeat(2,minmax(0,1fr));}.manager-inventory-modal > header h2 {font-size:23px;}}
+@media(max-width:540px){.manager-tank-grid {grid-template-columns:1fr;}.manager-inventory-fields,.manager-inventory-modal-suppliers .manager-inventory-fields,.manager-inventory-goods-details {grid-template-columns:1fr;}.manager-inventory-goods-options {grid-template-columns:1fr;}.manager-inventory-modal footer {gap:10px;}.manager-inventory-submit {padding:12px 16px;}.manager-inventory-goods {padding:14px;}}
+@media(prefers-reduced-motion:reduce){.manager-tank-card,.manager-tank-meter > span {transition:none;}}
