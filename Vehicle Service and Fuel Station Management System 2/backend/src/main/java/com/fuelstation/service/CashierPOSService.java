@@ -125,6 +125,7 @@ public class CashierPOSService {
         return receipt(sale);
     }
     CashierSale prepare(Checkout input,String inputKey,String cashier){
+        if (input == null || !Set.of("CASH", "CARD", "QR").contains(input.paymentMethod())) throw new IllegalArgumentException("Select Cash, Card or QR");
         String key=requestKey(inputKey),fingerprint=fingerprint(input);
         CashierSale prior=sales.findById(key).orElse(null);
         if(prior!=null){if(!Objects.equals(cashier,prior.getRecordedBy())||!fingerprint.equals(prior.getRequestFingerprint()))throw new IllegalArgumentException("Checkout request key was used for different details");return prior;}
@@ -157,13 +158,13 @@ public class CashierPOSService {
     }
     void settle(CashierSale sale){
         Invoice inv=invoices.findById(sale.getInvoiceId()).orElseThrow();
-        if(sale.getPaymentAmount()>0){PaymentRecord payment=new PaymentRecord();payment.setInvoiceNumber(inv.getInvoiceNumber());payment.setAmount(sale.getPaymentAmount());payment.setPaymentMethod(sale.getPaymentMethod());payment.setRequestKey(sale.getId());payment.setNotes("Cashier POS"+(sale.getGatewayPaymentId()==null?"":" / Gateway payment "+sale.getGatewayPaymentId()));billing.processPayment(payment);}
+        if(sale.getPaymentAmount()>0){PaymentRecord payment=new PaymentRecord();payment.setInvoiceId(inv.getId());payment.setInvoiceNumber(inv.getInvoiceNumber());payment.setAmount(sale.getPaymentAmount());payment.setPaymentMethod(sale.getPaymentMethod());payment.setRequestKey(sale.getId());payment.setNotes("INVOICE".equals(sale.getCheckoutType())?"Invoice payment":"Cashier POS");if("CARD".equals(sale.getPaymentMethod()))billing.processGatewayPayment(payment,sale.getGatewayPaymentId());else billing.processPayment(payment);}
         else if("SPARE_PART".equals(inv.getInvoiceType())){inv.setSettledTotal(0.0);inv.setSettledDate(LocalDate.now(clock));inv.setStatus("PAID");invoices.save(inv);notifications.invoiceChanged(inv,"Free parts invoice recorded");}
         else notifications.invoiceChanged(inv,"Additional parts added at the cashier");
-        sale.setState("SUCCESS");sales.save(sale);
+        sale.setState("SUCCESS");sale.setCompletedAt(LocalDateTime.now(clock));sales.save(sale);
     }
     @Transactional(readOnly=true)
-    public Object receipt(CashierSale sale){Invoice inv=sale.getInvoiceId()==null?null:invoices.findById(sale.getInvoiceId()).orElse(null);Map<String,Object> result=new LinkedHashMap<>();result.put("success",true);result.put("completed","SUCCESS".equals(sale.getState()));result.put("saleId",sale.getId());result.put("state",sale.getState());result.put("invoice",inv);result.put("offerSavings",sale.getOfferSavings());result.put("paymentAmount",sale.getPaymentAmount());result.put("changeDue",sale.getChangeDue());result.put("message",sale.getMessage());return result;}
+    public Object receipt(CashierSale sale){Invoice inv=sale.getInvoiceId()==null?null:invoices.findById(sale.getInvoiceId()).orElse(null);Map<String,Object> result=new LinkedHashMap<>();result.put("success",true);result.put("completed","SUCCESS".equals(sale.getState()));result.put("saleId",sale.getId());result.put("state",sale.getState());result.put("paymentMethod",sale.getPaymentMethod());result.put("paymentDate",sale.getCompletedAt()!=null?sale.getCompletedAt().toLocalDate():sale.getRecordedAt()!=null?sale.getRecordedAt().toLocalDate():LocalDate.now(clock));result.put("invoice",inv);result.put("offerSavings",sale.getOfferSavings());result.put("paymentAmount",sale.getPaymentAmount());result.put("changeDue",sale.getChangeDue());result.put("message",sale.getMessage());return result;}
     @Transactional(readOnly=true)
     public Object checkoutStatus(String key,String cashier){CashierSale sale=sales.findById(requestKey(key)).orElse(null);if(sale==null)return Map.of("success",true,"completed",false,"state","NOT_FOUND");if(!cashier.equals(sale.getRecordedBy()))throw new org.springframework.security.access.AccessDeniedException("This checkout belongs to another cashier");return receipt(sale);}
     @Transactional(readOnly=true)

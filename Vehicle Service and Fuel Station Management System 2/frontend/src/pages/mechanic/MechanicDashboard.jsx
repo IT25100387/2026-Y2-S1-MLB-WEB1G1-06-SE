@@ -99,7 +99,7 @@ export default function MechanicDashboard({manager=false}){
           <section className="mechanic-progress-panel"><h3>{readOnly?'Job details':'Progress & notes'}</h3>
             {readOnly?<><Badge value={selected.job.status}/><h4 className="mechanic-notes-label">Mechanic notes</h4><p className="mechanic-saved-notes">{selected.job.mechanicNotes||'No notes recorded.'}</p><p className="admin-meta">This job is read-only.</p></>:
               <form onSubmit={save} noValidate className="space-y-4"><Field label="Progress"><Input validationKey="status" className="input-dark w-full" readOnly value={selected.job.status}/></Field>
-                <Field label="Mechanic notes" optional><TextArea validationKey="mechanicNotes" className="input-dark w-full" maxLength={4000} placeholder="optional" value={notes} disabled={busy} onChange={event=>setNotes(event.target.value)}/></Field>
+                <Field label="Mechanic notes" optional><TextArea validationKey="mechanicNotes" className="input-dark w-full" maxLength={4000} value={notes} disabled={busy} onChange={event=>setNotes(event.target.value)}/></Field>
                 <div className="mechanic-progress-actions"><button disabled={busy} className="btn-accent">Save progress</button><button disabled={busy} type="button" className="admin-action" onClick={()=>setSelected(null)}>Cancel</button><button disabled={busy} type="button" className="btn-accent" onClick={event=>save(event,true)}>End job</button></div>
               </form>}
           </section>

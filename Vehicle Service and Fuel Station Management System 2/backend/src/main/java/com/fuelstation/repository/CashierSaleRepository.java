@@ -11,5 +11,6 @@ public interface CashierSaleRepository extends JpaRepository<CashierSale,String>
     @Query("select s from CashierSale s where s.id = :id")
     Optional<CashierSale> lockById(@Param("id") String id);
     List<CashierSale> findByReferenceNumber(String referenceNumber);
+    List<CashierSale> findByInvoiceId(Long invoiceId);
     List<CashierSale> findByState(String state);
 }

@@ -5,16 +5,18 @@ import {motion} from 'framer-motion';
 import {api,notice} from '../../lib/api';
 import {Badge,Modal,QuickDeck,money} from '../../components/DataUI';
 import {exportCSV} from '../../components/BillingPages';
-import EntityForm from '../../components/EntityForm';
+import InvoiceRefundForm from '../../components/InvoiceRefundForm';
+import PaymentReceipt from '../../components/PaymentReceipt';
+import {canRefundInvoice} from '../../lib/refunds';
 import './ManagerInvoices.css';
 import './ManagerPayments.css';
 import {useLiveRefresh} from '../../lib/useLiveRefresh';
 
 const statusLabels={SUCCESS:'Success',PENDING:'Pending',FAILED:'Failed',REFUNDED:'Refunded',PARTIALLY_REFUNDED:'Partially refunded'};
-const methodLabels={CASH:'Cash',CARD:'Credit / Debit Card',QR:'QR / Transfer',BANK:'Bank Transfer',CHEQUE:'Cheque',OTHER:'Other'};
+const methodLabels={CASH:'Cash',CARD:'Credit / Debit Card',QR:'QR',BANK:'Bank Transfer',CHEQUE:'Cheque',OTHER:'Other'};
 const methodKey=value=>String(value??'').trim().toUpperCase();
-const retained=payment=>Math.max(0,(payment.amount||0)-(payment.refundedAmount||0));
-const canRefund=payment=>['SUCCESS','PAID','PARTIALLY_REFUNDED'].includes(payment.status)&&retained(payment)>0&&Boolean(payment.invoiceNumber);
+const retained=payment=>Math.max(0,Math.round(((payment.amount||0)-(payment.refundedAmount||0))*100)/100);
+const refundablePayment=payment=>['SUCCESS','PAID'].includes(payment.status)&&!(payment.refundedAmount>0)&&retained(payment)>0&&Boolean(payment.invoiceNumber);
 
 function PaymentFilters({draft,setDraft,query,onSearch,status,onStatus,method,onMethod,statuses,methods,onExport,compact=false}){
   const active=Boolean(query||draft||status||method);
@@ -36,7 +38,9 @@ export default function ManagerPayments(){
   const [rows,setRows]=useState([]),[total,setTotal]=useState(0),[loading,setLoading]=useState(true),[error,setError]=useState('');
   const [draft,setDraft]=useState(''),[query,setQuery]=useState(''),[status,setStatus]=useState(''),[method,setMethod]=useState('');
   const [page,setPage]=useState(1),[size,setSize]=useState(10),[selected,setSelected]=useState(null),[opening,setOpening]=useState(null);
-  const load=useCallback(async()=>{try{const data=await api('/api/billing/payments');setRows(data.payments||[]);setTotal(data.totalSettled??0);setError('');return data.payments||[];}catch(error){setError(error.message);throw error;}finally{setLoading(false);}},[]);
+  const [invoices,setInvoices]=useState([]),[receipt,setReceipt]=useState(null);
+  const canRefund=payment=>refundablePayment(payment)&&canRefundInvoice(invoices.find(invoice=>invoice.invoiceNumber===payment.invoiceNumber));
+  const load=useCallback(async()=>{try{const [data,documents]=await Promise.all([api('/api/billing/payments'),api('/api/billing/invoices')]);setRows(data.payments||[]);setInvoices(documents.invoices||[]);setTotal(data.totalSettled??0);setError('');return data.payments||[];}catch(error){setError(error.message);throw error;}finally{setLoading(false);}},[]);
   useEffect(()=>{load().catch(()=>{});},[load]);
   useLiveRefresh(load);
   const changeQuery=value=>{setQuery(value);setPage(1);};
@@ -52,12 +56,11 @@ export default function ManagerPayments(){
   })),'payments.csv');
   const openRefund=async payment=>{
     setOpening(payment.id);
-    try{const latest=(await load()).find(row=>row.id===payment.id);if(!latest||!canRefund(latest)){notice('This payment has no refundable amount.');return;}setSelected(latest);}
+    try{const latest=(await load()).find(row=>row.id===payment.id);const linked=invoices.find(invoice=>invoice.invoiceNumber===payment.invoiceNumber);const invoice=linked&&(await api('/api/billing/invoices/'+linked.id)).invoice;if(!latest||!refundablePayment(latest)||!canRefundInvoice(invoice)){notice('Only fully paid invoices with no previous refund can be refunded.');return;}setSelected({...latest,invoice});}
     catch{}finally{setOpening(null);}
   };
-  const refund=async form=>{
-    await api(`/api/billing/refund-payment/${selected.id}?reason=${encodeURIComponent(form.reason.trim())}`,{method:'POST'});
-    setSelected(null);notice('Payment refund recorded');await load().catch(()=>{});
+  const refund=async result=>{
+    setSelected(null);setReceipt(result);notice(result.demo?'Demo refund completed':'Payment refund recorded');await load().catch(()=>{});
   };
   const filterProps={draft,setDraft,query,onSearch:changeQuery,status,onStatus:changeStatus,method,onMethod:changeMethod,onExport:exportPayments,
     statuses:[...new Set([...Object.keys(statusLabels),...rows.map(row=>row.status).filter(Boolean)])],
@@ -78,6 +81,7 @@ export default function ManagerPayments(){
         <td><div className="manager-invoice-actions"><button className="manager-invoice-action" disabled={!canRefund(payment)||opening!==null} onClick={()=>openRefund(payment)}>{opening===payment.id?'Opening...':'Refund'}</button>{payment.invoiceId&&<Link className="manager-invoice-action" to={`/dashboard/invoices/${payment.invoiceId}`}>View</Link>}</div></td>
       </motion.tr>)}{(loading||!filtered.length)&&<tr><td colSpan={8} className="manager-invoice-empty">{loading?'Loading payments...':'NO PAYMENTS MATCH YOUR CRITERIA'}</td></tr>}</tbody></table></div>
     <nav aria-label="Payment pagination" className="manager-invoice-pagination"><div className="manager-invoice-page-info"><span>Showing {filtered.length?(current-1)*size+1:0} &ndash; {Math.min(current*size,filtered.length)} of {filtered.length}</span><div className="manager-invoice-row-options"><span>Rows:</span>{[10,15,20].map(value=><button key={value} aria-label={`${value} rows per page`} aria-pressed={value===size} className={value===size?'is-active':''} onClick={()=>{setSize(value);setPage(1);}}>{value}</button>)}</div></div><div className="manager-invoice-page-buttons"><button aria-label="Previous page" disabled={current===1} onClick={()=>setPage(current-1)}>Prev</button><button aria-label="Next page" disabled={current===totalPages} onClick={()=>setPage(current+1)}>Next</button></div></nav>
-    {selected&&<Modal title="Refund payment" onClose={()=>setSelected(null)}><p className="manager-invoice-payment-id">{selected.invoiceNumber}{selected.referenceNumber&&<span>Ref: {selected.referenceNumber}</span>}</p><div className="manager-invoice-payment-balance"><span>Amount to refund</span><strong>Rs. {money(retained(selected))}</strong></div><p className="text-gray-400 text-sm mb-5">Refund the remaining amount of this payment to {selected.paidOccupant||selected.customerUsername||'the customer'}. The invoice and payment history will be updated.</p><EntityForm key={selected.id} submitLabel="Confirm refund" fields={[{key:'reason',label:'Refund reason',type:'textarea'}]} onSave={refund}/><button className="manager-invoice-action mt-4" onClick={()=>setSelected(null)}>Cancel</button></Modal>}
+    {selected&&<Modal title="Refund payment" onClose={()=>setSelected(null)}><p className="manager-invoice-payment-id">{selected.invoiceNumber}{selected.referenceNumber&&<span>Ref: {selected.referenceNumber}</span>}</p><InvoiceRefundForm invoice={selected.invoice} payment={selected} onRefunded={refund}/><button className="manager-invoice-action mt-4" onClick={()=>setSelected(null)}>Cancel</button></Modal>}
+    {receipt&&<PaymentReceipt receipt={receipt} onClose={()=>setReceipt(null)}/>}
   </motion.div>;
 }

@@ -20,11 +20,11 @@ public class CustomerCommerceRestController {
             return Map.of("id",p.getId(),"partName",p.getPartName(),"category",p.getCategory()==null ? "Parts" : p.getCategory(),"stockQuantity",p.getStockQuantity(),"sellingPrice",p.getSellingPrice(),"discountPercentage",discount,"price",com.fuelstation.util.Rules.money(p.getSellingPrice()*(1-discount/100)),"imageUrl",p.getImageUrl()==null?"":p.getImageUrl());
         }).toList();
     }
-    public record Purchase(Long partId,Integer quantity,String paymentMethod,String licensePlate) {}
+    public record Purchase(Long partId,Integer quantity,String paymentMethod,String licensePlate,Double cashTendered) {}
     @PostMapping("/store/purchase") public Object purchase(@RequestBody Purchase input,Authentication auth,@RequestHeader(value="Idempotency-Key",required=false) String key) {
         String method=com.fuelstation.util.Rules.paymentMethod(input.paymentMethod());
-        if (!Set.of("CARD","QR","BANK").contains(method)) throw new IllegalArgumentException("Choose Card, QR or Bank for account payments");
-        Invoice inv=billing.purchasePart(input.partId(),input.quantity(),auth.getName(),input.licensePlate(),null,method,null,key); return Map.of("success",true,"invoice",inv);
+        if ("CARD".equals(method)) throw new IllegalArgumentException("Card purchases must use the secure PayHere checkout");
+        Invoice inv=billing.purchasePart(input.partId(),input.quantity(),auth.getName(),input.licensePlate(),null,method,input.cashTendered(),key); return Map.of("success",true,"invoice",inv);
     }
     @GetMapping("/fuel") public Object fuel(Authentication auth) { return Map.of("prices",fuel.getAllPrices()); }
 }

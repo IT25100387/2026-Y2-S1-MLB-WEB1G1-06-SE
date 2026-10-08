@@ -60,28 +60,28 @@ public class BillingRestController {
     @PostMapping("/pay")
     public ResponseEntity<?> processPayment(@RequestBody PaymentRecord payment, @RequestHeader(value = "Idempotency-Key", required = false) String key, org.springframework.security.core.Authentication authentication) {
         try {
-            if(authentication.getAuthorities().stream().anyMatch(a->"ROLE_CASHIER".equals(a.getAuthority())))throw new IllegalArgumentException("Record cashier payments through the point of sale; card payments require gateway confirmation");
             if (key != null) payment.setRequestKey(key);
-            billingService.processPayment(payment);
-            return ResponseEntity.ok(Map.of("success", true, "message", "Payment processed successfully"));
+            PaymentRecord recorded=billingService.processPayment(payment);
+            return ResponseEntity.ok(Map.of("success",true,"message","Payment processed successfully","record",recorded,"invoice",billingService.getInvoiceById(recorded.getInvoiceId()).orElseThrow(),"paymentAmount",recorded.getAmount(),"paymentMethod",recorded.getPaymentMethod()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
     }
 
     @PostMapping("/refund/{id}")
-    public ResponseEntity<?> processRefund(@PathVariable Long id, @RequestParam("reason") String reason, @RequestParam(value = "amount", required = false) Double amount, @RequestHeader(value = "Idempotency-Key", required = false) String key) {
+    public ResponseEntity<?> processRefund(@PathVariable Long id, @RequestParam("reason") String reason, @RequestParam(value = "amount", required = false) String amount, @RequestParam(value="paymentMethod",required=false) String method, @RequestHeader(value = "Idempotency-Key", required = false) String key) {
         try {
+            Double requested=amount==null?null:com.fuelstation.util.InputValidation.decimal(amount,"Refund amount",.01,999999999.99,false).doubleValue();
             Invoice inv = billingService.getInvoiceById(id).orElse(null);
             if (inv == null) {
                 return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Invoice not found"));
             }
             // Use referenceNumber if invoiceNumber is null (some invoices might use referenceNumber as ID)
             String invNumber = inv.getInvoiceNumber();
-            Double refundAmount = amount != null ? amount : inv.getAmountPaid();
-            boolean success = billingService.refundInvoice(invNumber, refundAmount, reason, key);
+            Double refundAmount = requested != null ? requested : inv.getAmountPaid();
+            boolean success = method==null?billingService.refundInvoice(invNumber, refundAmount, reason, key):billingService.refundInvoice(invNumber, refundAmount, reason, key, method);
             if (success) {
-                return ResponseEntity.ok(Map.of("success", true, "message", "Refund processed successfully"));
+                return ResponseEntity.ok(Map.of("success", true, "message", "Refund processed successfully", "invoice", billingService.getInvoiceById(id).orElse(inv)));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Refund failed or already refunded"));
             }
@@ -91,9 +91,10 @@ public class BillingRestController {
     }
 
     @PostMapping("/refund-payment/{id}")
-    public ResponseEntity<?> processPaymentRefund(@PathVariable Long id, @RequestParam("reason") String reason) {
+    public ResponseEntity<?> processPaymentRefund(@PathVariable Long id, @RequestParam("reason") String reason, @RequestParam(value="amount",required=false) String amount, @RequestParam(value="paymentMethod",required=false) String method, @RequestHeader(value="Idempotency-Key",required=false) String key) {
         try {
-            boolean success = billingService.refundPayment(id, reason);
+            Double refund=amount==null?null:com.fuelstation.util.InputValidation.decimal(amount,"Refund amount",.01,999999999.99,false).doubleValue();
+            boolean success = method==null?billingService.refundPayment(id,refund,reason,key):billingService.refundPayment(id,refund,reason,key,method);
             if (success) {
                 return ResponseEntity.ok(Map.of("success", true, "message", "Payment refunded successfully"));
             } else {

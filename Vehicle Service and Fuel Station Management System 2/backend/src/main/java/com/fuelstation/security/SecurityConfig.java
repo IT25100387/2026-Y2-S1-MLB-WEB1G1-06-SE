@@ -66,6 +66,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/hr/**", "/api/v1/support/**", "/api/v1/feedback/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/pos/card/notify").permitAll()
                 .requestMatchers("/api/pos/**").hasRole("CASHIER")
+                .requestMatchers("/api/payments/card/**").hasAnyRole("ADMIN", "MANAGER", "CASHIER", "CUSTOMER")
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/billing/payments").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers("/api/billing/**").hasAnyRole("ADMIN", "MANAGER", "CASHIER")
                 .requestMatchers("/api/workshop/bookings/**", "/api/workshop/vehicles/**").hasAnyRole("MANAGER", "CASHIER")

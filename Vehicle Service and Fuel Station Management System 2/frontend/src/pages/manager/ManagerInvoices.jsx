@@ -6,6 +6,8 @@ import {api,notice,requestKey} from '../../lib/api';
 import {Badge,Modal,QuickDeck,money} from '../../components/DataUI';
 import {exportCSV} from '../../components/BillingPages';
 import EntityForm from '../../components/EntityForm';
+import {collectCardPayment} from '../../lib/cardPayments';
+import PaymentReceipt from '../../components/PaymentReceipt';
 import './ManagerInvoices.css';
 import {useLiveRefresh} from '../../lib/useLiveRefresh';
 
@@ -45,7 +47,7 @@ function InvoiceFilters({draft,setDraft,query,onSearch,filters,setFilters,status
 export default function ManagerInvoices(){
   const [rows,setRows]=useState([]),[loading,setLoading]=useState(true),[error,setError]=useState('');
   const [draft,setDraft]=useState(''),[query,setQuery]=useState(''),[filters,setFilters]=useState(emptyFilters);
-  const [size,setSize]=useState(10),[page,setPage]=useState(1),[selected,setSelected]=useState(null),[opening,setOpening]=useState(null);
+  const [size,setSize]=useState(10),[page,setPage]=useState(1),[selected,setSelected]=useState(null),[opening,setOpening]=useState(null),[paymentReceipt,setPaymentReceipt]=useState(null);
   const load=useCallback(async()=>{try{const data=await api('/api/billing/invoices');setRows(data.invoices||[]);setError('');}catch(error){setError(error.message);}finally{setLoading(false);}},[]);
   useEffect(()=>{load();},[load]);
   useLiveRefresh(load);
@@ -70,8 +72,8 @@ export default function ManagerInvoices(){
   const provisional=selected?.invoiceType==='SERVICE'&&!selected?.finalized;
   const pay=async form=>{
     if(provisional&&form.amount>=selected.balanceDue-.01)throw new Error('Full settlement is available after service completion. Enter an advance or partial amount.');
-    await api('/api/billing/pay',{method:'POST',headers:{'Idempotency-Key':form.requestKey},body:JSON.stringify({...form,invoiceNumber:selected.invoiceNumber})});
-    setSelected(null);await load();notice('Payment recorded');
+    const result=form.paymentMethod==='CARD'?await collectCardPayment({invoiceNumber:selected.invoiceNumber,amount:form.amount},form.requestKey,undefined,{invoice:selected}):await api('/api/billing/pay',{method:'POST',headers:{'Idempotency-Key':form.requestKey},body:JSON.stringify({...form,invoiceNumber:selected.invoiceNumber})});
+    setSelected(null);setPaymentReceipt({...result,paymentAmount:form.amount,paymentMethod:form.paymentMethod});await load();notice(result.demo?'Demo receipt ready — no money collected':'Payment recorded');
   };
   const filterProps={draft,setDraft,query,onSearch:changeQuery,filters,setFilters:changeFilters,onExport:exportInvoices,
     statuses:[...new Set([...Object.keys(statusLabels),...rows.map(row=>row.status).filter(Boolean)])],
@@ -97,6 +99,7 @@ export default function ManagerInvoices(){
       </motion.tr>)}{(loading||!filtered.length)&&<tr><td colSpan={9} className="manager-invoice-empty">{loading?'Loading invoices...':'NO INVOICES MATCH YOUR CRITERIA'}</td></tr>}</tbody>
     </table></div>
     <nav aria-label="Invoice pagination" className="manager-invoice-pagination"><div className="manager-invoice-page-info"><span>Showing {filtered.length?(current-1)*size+1:0} &ndash; {Math.min(current*size,filtered.length)} of {filtered.length}</span><div className="manager-invoice-row-options"><span>Rows:</span>{[10,15,20].map(value=><button key={value} aria-label={`${value} rows per page`} aria-pressed={value===size} className={value===size?'is-active':''} onClick={()=>{setSize(value);setPage(1);}}>{value}</button>)}</div></div><div className="manager-invoice-page-buttons"><button aria-label="Previous page" disabled={current===1} onClick={()=>setPage(current-1)}>Prev</button><button aria-label="Next page" disabled={current===totalPages} onClick={()=>setPage(current+1)}>Next</button></div></nav>
-    {selected&&<Modal title="Process payment" onClose={()=>setSelected(null)}><p className="manager-invoice-payment-id">{selected.invoiceNumber}{selected.referenceNumber&&<span>Ref: {selected.referenceNumber}</span>}</p><div className="manager-invoice-payment-balance"><span>Balance due</span><strong>Rs. {money(selected.balanceDue)}</strong></div>{provisional&&<p className="text-blue-400 text-sm mb-5">This service invoice is provisional. Advance and partial payments are available; full settlement is available after service completion.</p>}<EntityForm key={selected.id} submitLabel="Confirm payment" initial={{requestKey:selected.requestKey,amount:provisional?Math.max(0,(selected.advanceAmountDue||0)-(selected.amountPaid||0))||'':selected.balanceDue,paymentMethod:'CASH'}} fields={[{key:'amount',label:'Amount to pay (LKR)',type:'number',min:.01,max:selected.balanceDue},{key:'paymentMethod',label:'Payment method',options:['CASH','CARD','QR','BANK','CHEQUE','OTHER']}]} onSave={pay}/><button className="manager-invoice-action mt-4" onClick={()=>setSelected(null)}>Cancel</button></Modal>}
+    {selected&&<Modal title="Process payment" onClose={()=>setSelected(null)}><p className="manager-invoice-payment-id">{selected.invoiceNumber}{selected.referenceNumber&&<span>Ref: {selected.referenceNumber}</span>}</p><div className="manager-invoice-payment-balance"><span>Balance due</span><strong>Rs. {money(selected.balanceDue)}</strong></div>{provisional&&<p className="text-blue-400 text-sm mb-5">This service invoice is provisional. Advance and partial payments are available; full settlement is available after service completion.</p>}<EntityForm key={selected.id} submitLabel="Confirm payment" initial={{requestKey:selected.requestKey,amount:provisional?Math.max(0,(selected.advanceAmountDue||0)-(selected.amountPaid||0))||'':selected.balanceDue,paymentMethod:'CASH'}} fields={[{key:'amount',label:'Amount to pay (LKR)',type:'number',min:.01,max:selected.balanceDue},{key:'paymentMethod',label:'Payment method',options:['CASH','CARD','QR'],maxRows:3}]} onSave={pay}/><button className="manager-invoice-action mt-4" onClick={()=>setSelected(null)}>Cancel</button></Modal>}
+  {paymentReceipt&&<PaymentReceipt receipt={paymentReceipt} onClose={()=>setPaymentReceipt(null)}/>}
   </motion.div>;
 }

@@ -14,13 +14,17 @@ public class CashierSale {
     private String requestFingerprint;
     private String recordedBy;
     private LocalDateTime recordedAt;
+    private LocalDateTime completedAt;
     private LocalDateTime expiresAt;
     private String referenceNumber;
     private String paymentMethod;
+    private String checkoutType;
     private String state;
     private Long invoiceId;
     private Double paymentAmount;
     private Double invoicePaidBefore;
+    private Double demoInvoiceTotal;
+    private Double demoInvoiceBalance;
     private Double offerSavings;
     private Double changeDue;
     private String gatewayPaymentId;

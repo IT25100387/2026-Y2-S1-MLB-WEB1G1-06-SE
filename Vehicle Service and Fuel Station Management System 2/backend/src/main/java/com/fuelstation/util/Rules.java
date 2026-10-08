@@ -37,10 +37,7 @@ public final class Rules {
             case "CASH" -> "CASH";
             case "CARD", "CREDIT CARD", "DEBIT CARD", "CREDIT / DEBIT CARD" -> "CARD";
             case "QR", "QR PAY", "WALLET" -> "QR";
-            case "CHEQUE" -> "CHEQUE";
-            case "BANK DEPOSIT", "BANK", "BANK TRANSFER" -> "BANK";
-            case "OTHER" -> "OTHER";
-            default -> throw new IllegalArgumentException("Unsupported payment method");
+            default -> throw new IllegalArgumentException("Select Cash, Card or QR");
         };
     }
     private static class SetLimits {

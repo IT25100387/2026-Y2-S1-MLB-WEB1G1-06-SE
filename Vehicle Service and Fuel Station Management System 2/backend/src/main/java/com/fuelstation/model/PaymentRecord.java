@@ -30,7 +30,9 @@ public class PaymentRecord {
     
     private LocalDate paymentDate;
     private String paidOccupant;
-    private String paymentMethod; // Cash, Cheque, Bank Deposit, Other, Credit Card, Wallet
+    private String paymentMethod; // CASH, CARD, QR; historical methods are retained.
+    @com.fasterxml.jackson.annotation.JsonProperty(access=com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY)
+    private String gatewayPaymentId;
     private Double amount;
     
     private String customerUsername;

@@ -92,9 +92,7 @@ public class CustomerProfileRestController {
         String newPassword = payload.get("newPassword");
         String confirmPassword = payload.get("confirmPassword");
 
-        if (newPassword == null || newPassword.trim().length() < 6) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "New password must be at least 6 characters long."));
-        }
+        com.fuelstation.util.InputValidation.password(newPassword,true);
 
         if (!newPassword.equals(confirmPassword != null ? confirmPassword : "")) {
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", "New password and confirmation password do not match."));

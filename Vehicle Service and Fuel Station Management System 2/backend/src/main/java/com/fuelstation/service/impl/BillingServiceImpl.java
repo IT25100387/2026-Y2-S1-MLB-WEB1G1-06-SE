@@ -26,6 +26,8 @@ public class BillingServiceImpl implements BillingService {
     @Autowired private OfferService offerService;
     @Autowired private FuelInventoryRepository fuelInventories;
     @Autowired private Clock clock;
+    @Autowired private CashierSaleRepository cardSales;
+    @Autowired private PayHereRefundService cardRefunds;
 
     private String number(String type) { return type + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12).toUpperCase(Locale.ROOT); }
     @Override @Transactional(readOnly = true)
@@ -169,6 +171,7 @@ public class BillingServiceImpl implements BillingService {
         AppUser selectedCustomer=username==null||username.isBlank()?null:userRepository.findByUsernameIgnoreCase(username.trim()).filter(u -> "Customer".equalsIgnoreCase(u.getRole()) && "Active".equals(u.getStatus())).orElseThrow(() -> new IllegalArgumentException("Select an active customer account"));
         String owner=selectedCustomer==null?null:selectedCustomer.getUsername();
         String paymentMethod = Rules.paymentMethod(method == null ? "CASH" : method);
+        if("CARD".equals(paymentMethod))throw new IllegalArgumentException("Card purchases must use the secure PayHere checkout");
         if (key != null && !key.isBlank()) {
             if(key.length()>128)throw new IllegalArgumentException("Invalid purchase request key");
             Optional<Invoice> prior=invoiceRepository.findByPurchaseRequestKey(key);
@@ -213,6 +216,19 @@ public class BillingServiceImpl implements BillingService {
     }
     @Override
     public PaymentRecord processPayment(PaymentRecord payment) {
+        if ("CARD".equals(Rules.paymentMethod(payment.getPaymentMethod()))) throw new IllegalArgumentException("Card payments require confirmation from PayHere. Open the secure card checkout.");
+        payment.setGatewayPaymentId(null);
+        return recordPayment(payment, false);
+    }
+    @Override
+    public PaymentRecord processGatewayPayment(PaymentRecord payment, String gatewayPaymentId) {
+        CashierSale sale = cardSales.findById(Rules.required(payment.getRequestKey(), "Checkout reference")).orElseThrow(() -> new IllegalArgumentException("Verified card checkout not found"));
+        if (!"CARD".equals(sale.getPaymentMethod()) || !Set.of("PENDING", "REVIEW", "SUCCESS").contains(sale.getState()) || Boolean.TRUE.equals(sale.getSettlementBlocked()) || gatewayPaymentId == null || !gatewayPaymentId.equals(sale.getGatewayPaymentId()) || !Objects.equals(sale.getInvoiceId(), payment.getInvoiceId()) || Math.abs(sale.getPaymentAmount()-Rules.positive(payment.getAmount(), "Payment amount"))>.001) throw new IllegalArgumentException("Card payment has no verified gateway notification");
+        payment.setPaymentMethod("CARD");
+        payment.setGatewayPaymentId(gatewayPaymentId);
+        return recordPayment(payment, true);
+    }
+    private PaymentRecord recordPayment(PaymentRecord payment, boolean gateway) {
         String number = payment.getInvoiceNumber();
         if (number == null || number.isBlank()) {
             if (payment.getInvoiceId() != null) number = invoiceRepository.findById(payment.getInvoiceId()).orElseThrow(() -> new IllegalArgumentException("Invoice not found")).getInvoiceNumber();
@@ -220,6 +236,7 @@ public class BillingServiceImpl implements BillingService {
         }
         Invoice inv = invoiceRepository.lockByInvoiceNumber(number).orElseThrow(() -> new IllegalArgumentException("Invoice number not found"));
         if (payment.getInvoiceId() != null && !Objects.equals(inv.getId(), payment.getInvoiceId())) throw new IllegalArgumentException("Invoice identifiers do not match");
+        if (cardSales.findByInvoiceId(inv.getId()).stream().anyMatch(s -> Set.of("PENDING", "REVIEW").contains(s.getState()) && (!gateway || !s.getId().equals(payment.getRequestKey())))) throw new IllegalArgumentException("A card checkout for this invoice is pending or needs verification");
         double amount = Rules.positive(payment.getAmount(), "Payment amount");
         String method = Rules.paymentMethod(payment.getPaymentMethod());
         if (payment.getStatus() != null && !"SUCCESS".equals(payment.getStatus())) throw new IllegalArgumentException("Only successful payments can settle an invoice");
@@ -233,7 +250,7 @@ public class BillingServiceImpl implements BillingService {
             }
         }
         double balance = inv.getBalanceDue();
-        if (balance <= 0.01 || "VOID".equals(inv.getStatus())) throw new IllegalArgumentException("Invoice has no outstanding balance");
+        if (balance <= 0.001 || "VOID".equals(inv.getStatus())) throw new IllegalArgumentException("Invoice has no outstanding balance");
         if (amount > balance + 0.001) throw new IllegalArgumentException("Payment exceeds the remaining balance");
         if ("SERVICE".equals(inv.getInvoiceType()) && !Boolean.TRUE.equals(inv.getFinalized()) && amount >= balance - 0.001) throw new IllegalArgumentException("Complete the service before full settlement. Advance or partial payments can be recorded now.");
         if ("SPARE_PART".equals(inv.getInvoiceType()) && amount + 0.001 < balance) throw new IllegalArgumentException("Spare parts require full payment");
@@ -270,57 +287,124 @@ public class BillingServiceImpl implements BillingService {
     }
     @Override
     public boolean refundPayment(Long id, String reason) {
+        return refundPayment(id,null,reason,null);
+    }
+    @Override
+    public boolean refundPayment(Long id, Double amount, String reason, String key) {
+        return refundPayment(id, amount, reason, key, null);
+    }
+    @Override
+    public boolean refundPayment(Long id, Double amount, String reason, String key, String selectedMethod) {
         PaymentRecord original = paymentRecordRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Payment not found"));
-        Invoice inv = invoiceRepository.lockByInvoiceNumber(original.getInvoiceNumber()).orElseThrow();
+        Invoice inv = invoiceRepository.lockByInvoiceNumber(original.getInvoiceNumber()).orElseThrow(() -> new IllegalArgumentException("Payment has no linked invoice"));
         PaymentRecord p = paymentRecordRepository.lockById(id).orElseThrow();
+        String why=Rules.required(reason,"Refund reason");
+        String method=manualRefundMethod(selectedMethod,p);
+        Double requested=amount==null?null:Rules.positive(amount,"Refund amount");
+        if(key!=null){
+            if(key.isBlank()||key.length()>100)throw new IllegalArgumentException("Invalid refund request key");
+            var old=refundRepository.findByRequestKey(key);
+            if(old.isPresent()){
+                RefundRecord refund=old.get();
+                if(!Objects.equals(id,refund.getPaymentId())||!Objects.equals(why,refund.getReason())||!Objects.equals(method,refund.getPaymentMethod())||requested!=null&&Math.abs(requested-Rules.amount(refund.getRequestedAmount()))>.001)throw new IllegalArgumentException("Refund request key has already been used");
+                return true;
+            }
+        }
+        requireRefundableInvoice(inv);
+        requireCashRefundSafe(inv,method);
+        if (Rules.amount(p.getRefundedAmount()) > 0 || "PARTIALLY_REFUNDED".equals(p.getStatus())) throw new IllegalArgumentException("An invoice can be refunded only once, including a partial refund");
         double remaining = Rules.money(Rules.amount(p.getAmount()) - Rules.amount(p.getRefundedAmount()));
-        if (remaining <= 0 || "REFUNDED".equals(p.getStatus())) return false;
+        if (remaining <= 0 || !Set.of("SUCCESS","PAID").contains(p.getStatus()) || Rules.amount(p.getRefundedAmount()) > 0) return false;
+        double refund=requested==null?remaining:requested;
+        if(refund>remaining+.001)throw new IllegalArgumentException("Refund amount exceeds this payment's remaining refundable balance");
+        if(refund>Rules.amount(inv.getAmountPaid())+.001)throw new IllegalArgumentException("Invoice payments do not reconcile; no refund was recorded");
         boolean closed = inv.getBalanceDue() <= 0.01;
-        refundPart(inv, p, remaining, Rules.required(reason, "Refund reason"), "payment-refund-" + id);
-        finishRefund(inv, remaining, reason, closed);
+        refundPart(inv, p, refund, why, key, method);
+        finishRefund(inv, refund, why, closed);
         return true;
     }
     @Override
     public boolean refundInvoice(String number, Double amount, String reason) { return refundInvoice(number, amount, reason, null); }
     @Override
     public boolean refundInvoice(String number, Double amount, String reason, String key) {
+        return refundInvoice(number, amount, reason, key, null);
+    }
+    @Override
+    public boolean refundInvoice(String number, Double amount, String reason, String key, String selectedMethod) {
         Invoice inv = invoiceRepository.lockByInvoiceNumber(number).orElseThrow(() -> new IllegalArgumentException("Invoice not found"));
+        String why = Rules.required(reason, "Refund reason");
+        String chosen=selectedMethod==null?null:manualRefundMethod(selectedMethod,null);
         if (key != null) {
             if (key.isBlank() || key.length() > 100) throw new IllegalArgumentException("Invalid refund request key");
             var old = refundRepository.findByRequestKey(key);
-            if (old.isPresent()) { if (!number.equals(old.get().getInvoiceNumber()) || amount != null && Math.abs(amount-old.get().getRequestedAmount())>.001 || !Objects.equals(reason, old.get().getReason())) throw new IllegalArgumentException("Refund request key has already been used"); return true; }
+            if (old.isPresent()) { if (!number.equals(old.get().getInvoiceNumber()) || amount != null && Math.abs(amount-old.get().getRequestedAmount())>.001 || !Objects.equals(why, old.get().getReason()) || chosen!=null&&!Objects.equals(chosen,old.get().getPaymentMethod())) throw new IllegalArgumentException("Refund request key has already been used"); return true; }
         }
-        if (inv.getBalanceDue() > 0.01 || "VOID".equals(inv.getStatus())) return false;
+        requireRefundableInvoice(inv);
+        if ("CASH".equals(chosen)) requireCashRefundSafe(inv,chosen);
         double refund = Rules.positive(amount == null ? inv.getAmountPaid() : amount, "Refund amount");
         if (refund > Rules.amount(inv.getAmountPaid()) + 0.001) throw new IllegalArgumentException("Refund exceeds retained payments");
-        String why = Rules.required(reason, "Refund reason");
-        List<PaymentRecord> payments = paymentRecordRepository.findByInvoiceNumberOrderByIdAsc(number);
+        List<PaymentRecord> payments = paymentRecordRepository.findByInvoiceNumberOrderByIdAsc(number).stream().filter(p->Set.of("SUCCESS","PAID").contains(p.getStatus())&&Rules.amount(p.getRefundedAmount())==0&&(!"CARD".equals(chosen)||"CARD".equals(p.getPaymentMethod()))).toList();
         double available = payments.stream().mapToDouble(p -> Math.max(0, Rules.amount(p.getAmount()) - Rules.amount(p.getRefundedAmount()))).sum();
         if (available + 0.001 < refund) throw new IllegalStateException("Invoice payments do not reconcile; no refund was recorded");
         double left = refund;
         int index = 0;
+        List<RefundAllocation> allocations = new ArrayList<>();
         for (PaymentRecord row : payments) {
             if (left <= 0.001) break;
             PaymentRecord p = paymentRecordRepository.lockById(row.getId()).orElseThrow();
             double retained = Math.max(0, Rules.amount(p.getAmount()) - Rules.amount(p.getRefundedAmount()));
             double portion = Math.min(left, retained);
-            if (portion > 0) { refundPart(inv, p, portion, why, key == null ? null : key + ":" + index++); left = Rules.money(left - portion); }
+            if (portion > 0) { String method=manualRefundMethod(chosen,p);if("CARD".equals(method)){gatewayReference(p);if(key==null||key.isBlank())throw new IllegalArgumentException("Card refunds require a refund request key");}allocations.add(new RefundAllocation(p,portion,key==null?null:key+":"+index++,method));left=Rules.money(left-portion); }
         }
-        if (key != null) { RefundRecord marker = new RefundRecord(); marker.setInvoiceNumber(number); marker.setAmount(0.0); marker.setRequestedAmount(refund); marker.setRequestKey(key); marker.setReason(why); marker.setCreatedAt(LocalDateTime.now(clock)); refundRepository.save(marker); }
+        if(left>.001)throw new IllegalStateException("Refund allocation changed; no refund was sent");
+        if(chosen==null&&allocations.stream().allMatch(a->"CASH".equals(a.method())))requireCashRefundSafe(inv,"CASH");
+        for(RefundAllocation allocation:allocations)refundPart(inv,allocation.payment(),allocation.amount(),why,allocation.key(),allocation.method());
+        if (key != null) { RefundRecord marker = new RefundRecord(); marker.setInvoiceNumber(number); marker.setAmount(0.0); marker.setRequestedAmount(refund); marker.setRequestKey(key); marker.setReason(why); marker.setPaymentMethod(chosen); marker.setCreatedAt(LocalDateTime.now(clock)); refundRepository.save(marker); }
         finishRefund(inv, refund, why, true);
         return true;
     }
+    private void requireRefundableInvoice(Invoice invoice) {
+        if (Rules.amount(invoice.getRefundedAmount()) > 0 || Set.of("REFUNDED","PARTIALLY_REFUNDED").contains(invoice.getStatus()) || !refundRepository.findByInvoiceNumberOrderByIdAsc(invoice.getInvoiceNumber()).isEmpty())
+            throw new IllegalArgumentException("An invoice can be refunded only once, including a partial refund");
+        if (!"PAID".equals(invoice.getStatus()) || invoice.getBalanceDue() > 0.01 || Rules.amount(invoice.getAmountPaid()) <= 0 || Rules.amount(invoice.getAmountPaid()) + .01 < invoice.getNetTotalWithPenalty())
+            throw new IllegalArgumentException("Only fully paid invoices can be refunded");
+    }
+    private void requireCashRefundSafe(Invoice invoice,String method) {
+        if ("CASH".equals(method)) for(PaymentRecord payment:paymentRecordRepository.findByInvoiceNumberOrderByIdAsc(invoice.getInvoiceNumber()))
+            if ("CARD".equals(payment.getPaymentMethod())) cardRefunds.requireNoUnresolvedRefund(payment.getId());
+    }
+    private String manualRefundMethod(String selected, PaymentRecord payment) {
+        String method=selected==null?refundMethod(payment):Rules.paymentMethod(selected);
+        if (!Set.of("CASH","CARD").contains(method)) throw new IllegalArgumentException("Select Cash or Card for a refund");
+        if ("CARD".equals(method) && payment!=null && !"CARD".equals(refundMethod(payment))) throw new IllegalArgumentException("Card refunds require an original verified card payment");
+        return method;
+    }
+    private record RefundAllocation(PaymentRecord payment,double amount,String key,String method) {}
+    private String refundMethod(PaymentRecord payment){try{return Rules.paymentMethod(payment.getPaymentMethod());}catch(IllegalArgumentException e){throw new IllegalArgumentException("This historical payment method requires manual reconciliation before refunding");}}
+    private String gatewayReference(PaymentRecord payment){
+        String id=payment.getGatewayPaymentId();
+        if(id==null&&payment.getRequestKey()!=null)id=cardSales.findById(payment.getRequestKey()).map(CashierSale::getGatewayPaymentId).orElse(null);
+        if(id==null)throw new IllegalArgumentException("This historical card payment has no verified gateway reference. Reconcile it with PayHere before refunding.");
+        return id;
+    }
     private void refundPart(Invoice inv, PaymentRecord p, double amount, String reason, String key) {
+        refundPart(inv,p,amount,reason,key,refundMethod(p));
+    }
+    private void refundPart(Invoice inv, PaymentRecord p, double amount, String reason, String key, String method) {
+        String gatewayRefund = null;
+        if ("CARD".equals(method)) gatewayRefund = cardRefunds.refund(p.getId(),gatewayReference(p),amount,reason,key);
         p.setRefundedAmount(Rules.money(Rules.amount(p.getRefundedAmount()) + amount));
-        p.setStatus(p.getAmount() - p.getRefundedAmount() <= 0.01 ? "REFUNDED" : "PARTIALLY_REFUNDED");
+        p.setStatus(p.getAmount() - p.getRefundedAmount() <= 0.001 ? "REFUNDED" : "PARTIALLY_REFUNDED");
         paymentRecordRepository.save(p);
-        RefundRecord refund = new RefundRecord(); refund.setInvoiceNumber(inv.getInvoiceNumber()); refund.setPaymentId(p.getId()); refund.setAmount(amount); refund.setReason(reason); refund.setCreatedAt(LocalDateTime.now(clock)); refund.setRequestKey(key);
+        RefundRecord refund = new RefundRecord(); refund.setInvoiceNumber(inv.getInvoiceNumber()); refund.setPaymentId(p.getId()); refund.setAmount(amount); refund.setRequestedAmount(amount); refund.setReason(reason); refund.setCreatedAt(LocalDateTime.now(clock)); refund.setRequestKey(key);
+        refund.setGatewayRefundId(gatewayRefund);
+        refund.setPaymentMethod(method);
         var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication(); refund.setRecordedBy(auth == null ? "system" : auth.getName()); refundRepository.save(refund);
     }
     private void finishRefund(Invoice inv, double amount, String reason, boolean closed) {
         if (closed && inv.getSettledTotal() == null) { inv.setSettledTotal(inv.getNetTotalWithPenalty()); inv.setSettledDate(LocalDate.now(clock)); }
         inv.setAmountPaid(Rules.money(Rules.amount(inv.getAmountPaid()) - amount)); inv.setRefundedAmount(Rules.money(Rules.amount(inv.getRefundedAmount()) + amount)); inv.setRefundReason(reason); inv.setRefundDate(LocalDate.now(clock));
-        inv.setStatus(closed ? (inv.getAmountPaid() <= 0.01 ? "REFUNDED" : "PARTIALLY_REFUNDED") : (inv.getAmountPaid() > 0 ? "PARTIAL" : "PENDING"));
+        inv.setStatus(closed ? (inv.getAmountPaid() <= 0.001 ? "REFUNDED" : "PARTIALLY_REFUNDED") : (inv.getAmountPaid() > 0 ? "PARTIAL" : "PENDING"));
         invoiceRepository.save(inv); notifications.invoiceChanged(inv, "Refund recorded");
     }
     @Override
@@ -335,6 +419,10 @@ public class BillingServiceImpl implements BillingService {
     @Override
     public Supplier saveSupplier(Supplier supplier) {
         supplier.setSupplierName(Rules.required(supplier.getSupplierName(), "Supplier name"));
+        supplier.setContactNumber(com.fuelstation.util.InputValidation.phone(supplier.getContactNumber(),"Contact number",true));
+        supplier.setEmail(com.fuelstation.util.InputValidation.email(supplier.getEmail(),false));
+        com.fuelstation.util.DeliverySchedule.validate(supplier.getDeliverySchedule());
+        supplier.setDeliverySchedule(com.fuelstation.util.DeliverySchedule.normalize(supplier.getDeliverySchedule()));
         if (supplierRepository.findAll().stream().anyMatch(s -> !Objects.equals(s.getId(),supplier.getId()) && s.getSupplierName().equalsIgnoreCase(supplier.getSupplierName()))) throw new IllegalArgumentException("Supplier name already exists");
         if (supplier.getId()!=null) {
             var old=supplierRepository.findById(supplier.getId()).orElseThrow(() -> new IllegalArgumentException("Supplier not found"));

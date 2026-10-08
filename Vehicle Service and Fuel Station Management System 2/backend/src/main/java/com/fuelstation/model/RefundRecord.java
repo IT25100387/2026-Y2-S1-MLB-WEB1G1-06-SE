@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity @Data
 public class RefundRecord {
+    private String gatewayRefundId;
+    private String paymentMethod;
     @jakarta.persistence.ManyToOne(fetch=jakarta.persistence.FetchType.LAZY)
     @jakarta.persistence.JoinColumn(name="payment_id", referencedColumnName="id", insertable=false, updatable=false)
     @com.fasterxml.jackson.annotation.JsonIgnore @lombok.ToString.Exclude @lombok.EqualsAndHashCode.Exclude

@@ -30,12 +30,14 @@ public class InputValidationAdvice extends RequestBodyAdviceAdapter {
     @Override public boolean supports(MethodParameter p,Type type,Class<? extends HttpMessageConverter<?>> converter) {return true;}
     @Override public HttpInputMessage beforeBodyRead(HttpInputMessage input,MethodParameter parameter,Type target,Class<? extends HttpMessageConverter<?>> converter) throws IOException {
         MediaType type=input.getHeaders().getContentType();
-        if(type==null||!MediaType.APPLICATION_JSON.isCompatibleWith(type))return input;
+        if(type==null||!MediaType.APPLICATION_JSON.isCompatibleWith(type)||request.getRequestURI().endsWith("/card/notify"))return input;
         byte[] bytes=input.getBody().readAllBytes();
         JsonNode raw;
         try{raw=mapper.readTree(bytes);}catch(com.fasterxml.jackson.core.JsonProcessingException error){throw new org.springframework.http.converter.HttpMessageNotReadableException("Enter valid JSON values",error,input);}
-        if(raw!=null)InputValidation.validate(raw,request.getRequestURI(),LocalDate.now(clock));
-        return new HttpInputMessage(){public InputStream getBody(){return new ByteArrayInputStream(bytes);}public HttpHeaders getHeaders(){return input.getHeaders();}};
+        if(raw!=null){InputValidation.normalize(raw);InputValidation.validate(raw,request.getRequestURI(),LocalDate.now(clock));}
+        byte[] normalized=raw==null?bytes:mapper.writeValueAsBytes(raw);
+        HttpHeaders headers=new HttpHeaders();headers.putAll(input.getHeaders());headers.setContentLength(normalized.length);
+        return new HttpInputMessage(){public InputStream getBody(){return new ByteArrayInputStream(normalized);}public HttpHeaders getHeaders(){return headers;}};
     }
     @Override public Object afterBodyRead(Object body,HttpInputMessage input,MethodParameter parameter,Type target,Class<? extends HttpMessageConverter<?>> converter) {
         // PayHere callbacks have their own signature/amount verification and are not user forms.

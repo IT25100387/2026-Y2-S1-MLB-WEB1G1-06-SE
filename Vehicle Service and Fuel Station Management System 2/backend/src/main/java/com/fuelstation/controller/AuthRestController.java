@@ -36,7 +36,7 @@ public class AuthRestController {
     public record Reset(String token, String newPassword, String confirmPassword) {}
     @PostMapping("/reset-password")
     public ResponseEntity<?> reset(@RequestBody Reset form) {
-        if (form.newPassword() == null || form.newPassword().codePointCount(0,form.newPassword().length()) < 15 || !form.newPassword().equals(form.confirmPassword())) throw new IllegalArgumentException("Enter matching passwords with at least 15 characters");
+        if (form.newPassword() == null || form.newPassword().codePointCount(0,form.newPassword().length()) < 8 || !form.newPassword().equals(form.confirmPassword())) throw new IllegalArgumentException("Enter matching passwords with at least 8 characters");
         if (!users.resetPasswordWithToken(form.token(), form.newPassword())) throw new IllegalArgumentException("Reset link is invalid or expired");
         return ResponseEntity.ok(Map.of("success", true, "message", "Password updated. Sign in using your new password."));
     }

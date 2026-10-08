@@ -56,7 +56,7 @@ const AccountSettings = () => {
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     setPwError('');
-    if ([...pwForm.newPassword].length < 15) return setPwError('Use at least 15 characters for a new password.');
+    if ([...pwForm.newPassword].length < 8) return setPwError('Use at least 8 characters for a new password.');
     if (pwForm.newPassword !== pwForm.confirmPassword) return setPwError('Passwords do not match.');
     try {
       await api('/api/v1/account/password', { method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body: JSON.stringify(pwForm) });
@@ -163,15 +163,15 @@ const AccountSettings = () => {
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-gray-500 tracking-widest mb-2 uppercase">Phone Number</label>
-                    <Input aria-label="Phone number" validationKey="phoneNumber" type="text" value={profileForm.phoneNumber} onChange={e => setProfileForm({...profileForm, phoneNumber: e.target.value})} className="input-dark w-full p-3 text-sm" placeholder="optional" />
+                    <Input aria-label="Phone number" validationKey="phoneNumber" type="text" value={profileForm.phoneNumber} onChange={e => setProfileForm({...profileForm, phoneNumber: e.target.value})} className="input-dark w-full p-3 text-sm" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-gray-500 tracking-widest mb-2 uppercase">City</label>
-                    <Input aria-label="City" validationKey="city" type="text" value={profileForm.city} onChange={e => setProfileForm({...profileForm, city: e.target.value})} className="input-dark w-full p-3 text-sm" placeholder="optional" />
+                    <Input aria-label="City" validationKey="city" type="text" value={profileForm.city} onChange={e => setProfileForm({...profileForm, city: e.target.value})} className="input-dark w-full p-3 text-sm" />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-[10px] font-bold text-gray-500 tracking-widest mb-2 uppercase">Address</label>
-                    <Input aria-label="Address" validationKey="address" type="text" value={profileForm.address} onChange={e => setProfileForm({...profileForm, address: e.target.value})} className="input-dark w-full p-3 text-sm" placeholder="optional" />
+                    <Input aria-label="Address" validationKey="address" type="text" value={profileForm.address} onChange={e => setProfileForm({...profileForm, address: e.target.value})} className="input-dark w-full p-3 text-sm" />
                   </div>
                 </div>
                 <div className="pt-4 flex justify-end">
@@ -200,7 +200,7 @@ const AccountSettings = () => {
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-gray-500 tracking-widest mb-2 uppercase" htmlFor="security-newPassword">New Password<RequiredMark/></label>
-                  <Input required id="security-newPassword" aria-label="New password" autoComplete="new-password" validationKey="newPassword" type="password" value={pwForm.newPassword} onChange={e => setPwForm({...pwForm, newPassword: e.target.value})} className="input-dark w-full p-3 text-sm" placeholder="Min. 15 characters" />
+                  <Input required id="security-newPassword" aria-label="New password" autoComplete="new-password" validationKey="newPassword" type="password" value={pwForm.newPassword} onChange={e => setPwForm({...pwForm, newPassword: e.target.value})} className="input-dark w-full p-3 text-sm" placeholder="Min. 8 characters" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-gray-500 tracking-widest mb-2 uppercase" htmlFor="security-confirmPassword">Confirm New Password<RequiredMark/></label>

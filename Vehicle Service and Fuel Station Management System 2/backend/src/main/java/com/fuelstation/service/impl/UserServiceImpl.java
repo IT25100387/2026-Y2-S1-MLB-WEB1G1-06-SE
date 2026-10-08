@@ -61,7 +61,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(validEmail(user.getEmail(), null));
         user.setFullName(com.fuelstation.util.InputValidation.name(user.getFullName(), "Full name",true));
         user.setPhoneNumber(com.fuelstation.util.InputValidation.phone(user.getPhoneNumber(),"Phone",false));
-        if (user.getPassword() == null || user.getPassword().length() < 6) throw new IllegalArgumentException("Password must have at least 6 characters");
+        user.setAddress(com.fuelstation.util.InputValidation.address(user.getAddress(),"Address",255,false));
+        com.fuelstation.util.InputValidation.password(user.getPassword(),true);
         if (!java.util.List.of("Admin", "Manager", "Cashier", "Mechanic", "Customer").contains(user.getRole())) throw new IllegalArgumentException("Select a valid account role");
         user.setId(null); user.setUsername(username); user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus("Active"); user.setCreatedAt(java.time.LocalDateTime.now(java.time.ZoneId.of("Asia/Colombo"))); user.setResetToken(null); user.setResetTokenExpiry(null);
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
             existing.setPhoneNumber(com.fuelstation.util.InputValidation.phone(updatedUser.getPhoneNumber(),"Phone",false));
         }
         if (updatedUser.getAddress() != null) {
-            existing.setAddress(com.fuelstation.util.InputValidation.text(updatedUser.getAddress(),"Address",255,false,false));
+            existing.setAddress(com.fuelstation.util.InputValidation.address(updatedUser.getAddress(),"Address",255,false));
         }
         if (updatedUser.getCity() != null) {
             existing.setCity(com.fuelstation.util.InputValidation.text(updatedUser.getCity(),"City",80,false,false));
@@ -191,7 +192,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(com.fuelstation.util.InputValidation.name(fullName,"Full name",true));
         user.setEmail(validEmail(email, user.getId()));
         user.setPhoneNumber(com.fuelstation.util.InputValidation.phone(phone,"Phone number",false));
-        user.setAddress(com.fuelstation.util.InputValidation.text(address,"Address",255,false,false));
+        user.setAddress(com.fuelstation.util.InputValidation.address(address,"Address",255,false));
         user.setCity(com.fuelstation.util.InputValidation.text(city,"City",80,false,false));
 
         return userRepository.save(user);

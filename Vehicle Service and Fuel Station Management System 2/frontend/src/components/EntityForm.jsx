@@ -1,5 +1,34 @@
-import {Input,Select,TextArea} from './Validation';
+import {Input,TextArea} from './Validation';
 import {useState} from 'react';
 import {Field} from './DataUI';
-import {validateFields} from '../lib/validation';
-export default function EntityForm({fields,initial={},onSave,submitLabel='Save'}){const [form,setForm]=useState(initial),[errors,setErrors]=useState({}),[busy,setBusy]=useState(false);const change=(key,value)=>{setForm(old=>({...old,[key]:value}));setErrors(old=>({...old,[key]:'',form:''}));};const save=async e=>{e.preventDefault();const issues=validateFields(fields,form),payload={...form};for(const field of fields){let value=form[field.key];if(!field.optional&&(value==null||String(value).trim()===''))issues[field.key]=`${field.label} is required`;if(field.type==='number'){value=value===''||value==null?null:Number(value);if(value!==null&&(!Number.isFinite(value)||field.integer&&!Number.isInteger(value)||field.min!=null&&value<field.min||field.max!=null&&value>field.max))issues[field.key]='Enter a valid number within the allowed range';payload[field.key]=value;}if(field.type==='boolean')payload[field.key]=value===true||value==='true';if(field.type==='email'&&value&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))issues[field.key]='Enter a valid email';if(field.validate){const message=field.validate(value,form);if(message)issues[field.key]=message;}}setErrors(issues);if(Object.keys(issues).length)return;setBusy(true);try{await onSave(payload);}catch(error){setErrors({...error.fields,form:error.message});}finally{setBusy(false);}};return <form noValidate onSubmit={save} className="space-y-5"><div className="grid sm:grid-cols-2 gap-5">{fields.map(field=><Field key={field.key} label={field.label} error={errors[field.key]} optional={field.optional}>{field.options?<div className="relative"><Select validation={field} validationKey={field.key} className={`input-dark w-full p-3 pr-8 appearance-none text-sm ${errors[field.key]?'border-brand-accent':''}`} value={form[field.key]??''} onChange={e=>change(field.key,e.target.value)}><option value="">{field.optional?'optional':'Select '+field.label}</option>{field.options.map(option=><option key={typeof option==='object'?option.value:option} value={typeof option==='object'?option.value:option}>{typeof option==='object'?option.label:option}</option>)}</Select><i aria-hidden="true" className="fa-solid fa-chevron-down absolute right-3 top-4 text-[10px] pointer-events-none"/></div>:field.type==='textarea'?<TextArea validation={field} validationKey={field.key} placeholder={field.optional?'optional':field.label} className={`input-dark w-full p-3 text-sm ${errors[field.key]?'border-brand-accent':''}`} value={form[field.key]??''} onChange={e=>change(field.key,e.target.value)}/>:<Input validation={field} validationKey={field.key} placeholder={field.optional?'optional':field.label} readOnly={typeof field.readOnly==='function'?field.readOnly(form):field.readOnly} type={field.type||'text'} step={field.type==='number'?(field.integer?'1':'0.01'):undefined} className={`input-dark w-full p-3 text-sm ${errors[field.key]?'border-brand-accent':''}`} value={form[field.key]??''} onChange={e=>change(field.key,e.target.value)}/>}</Field>)}</div>{errors.form&&<p role="alert" className="text-brand-accent text-[10px] font-bold uppercase">{errors.form}</p>}<button disabled={busy} className="btn-accent px-6 py-3 rounded-full text-xs uppercase font-bold disabled:opacity-40">{busy?'Saving?':submitLabel}</button></form>;}
+import ChoiceInput from './ChoiceInput';
+import {normalizePayload,placeholderFor,ruleFor,validateFields} from '../lib/validation';
+
+export default function EntityForm({fields,initial={},onSave,submitLabel='Save'}){
+  const [form,setForm]=useState(initial),[errors,setErrors]=useState({}),[busy,setBusy]=useState(false);
+  const resolved=fields.map(field=>({...field,options:typeof field.options==='function'?field.options(form):field.options}));
+  const change=(key,value)=>{
+    const reset=fields.find(field=>field.key===key)?.resets||[];
+    setForm(old=>({...old,[key]:value,...Object.fromEntries(reset.map(item=>[item,'']))}));
+    setErrors(old=>({...old,[key]:'',...Object.fromEntries(reset.map(item=>[item,''])),form:''}));
+  };
+  const save=async event=>{
+    event.preventDefault();
+    const payload=normalizePayload(form),issues=validateFields(resolved,payload);
+    for(const field of resolved){
+      if(field.type==='number')payload[field.key]=payload[field.key]===''||payload[field.key]==null?null:Number(payload[field.key]);
+      if(field.type==='boolean')payload[field.key]=payload[field.key]===true||payload[field.key]==='true';
+    }
+    setErrors(issues);if(Object.keys(issues).length)return;
+    setBusy(true);try{await onSave(payload);}catch(error){setErrors({...error.fields,form:error.message});}finally{setBusy(false);}
+  };
+  return <form noValidate onSubmit={save} className="space-y-5"><fieldset disabled={busy} className="grid sm:grid-cols-2 gap-5">{resolved.map(field=>{
+    const validation={...field,options:field.allowCustom?undefined:field.options};
+    const attributes={validation,validationKey:field.key,className:`input-dark w-full p-3 text-sm ${errors[field.key]?'border-brand-accent':''}`,value:form[field.key]??'',onChange:event=>change(field.key,event.target.value),disabled:typeof field.disabled==='function'?field.disabled(form):field.disabled};
+    return <Field key={field.key} label={field.label} error={errors[field.key]} optional={field.optional}>
+      {field.options?<ChoiceInput {...attributes} maxRows={field.maxRows} options={field.options} allowCustom={field.allowCustom} placeholder={field.choicePlaceholder||placeholderFor(ruleFor(field.key,field.label),field.placeholder)} customPlaceholder={field.customPlaceholder}/>
+        :field.type==='textarea'?<TextArea {...attributes} placeholder={field.placeholder}/>
+        :<Input {...attributes} placeholder={field.placeholder} readOnly={typeof field.readOnly==='function'?field.readOnly(form):field.readOnly} type={field.type||'text'} step={field.type==='number'?(field.integer?'1':'0.01'):undefined}/>}
+    </Field>;
+  })}</fieldset>{errors.form&&<p role="alert" className="text-brand-accent text-[10px] font-bold uppercase">{errors.form}</p>}<button disabled={busy} className="btn-accent px-6 py-3 rounded-full text-xs uppercase font-bold disabled:opacity-40">{busy?(form.paymentMethod==='CARD'?'Waiting for PayHere confirmation…':'Saving…'):submitLabel}</button></form>;
+}

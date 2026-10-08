@@ -25,14 +25,18 @@ public interface BillingService {
 
     // Payments
     PaymentRecord processPayment(PaymentRecord payment);
+    PaymentRecord processGatewayPayment(PaymentRecord payment, String gatewayPaymentId);
     List<PaymentRecord> getPaymentsByReferenceNumber(String referenceNumber);
     List<PaymentRecord> getPaymentsByCustomer(String customerUsername);
     List<PaymentRecord> getAllPayments();
     PaymentRecord processCustomerPayment(String invoiceNumber, String customerUsername, String paymentMethod, Double amount);
     PaymentRecord processCustomerPayment(String invoiceNumber, String customerUsername, String paymentMethod, Double amount, String requestKey);
     boolean refundPayment(Long paymentId, String reason);
+    boolean refundPayment(Long paymentId, Double amount, String reason, String requestKey);
+    boolean refundPayment(Long paymentId, Double amount, String reason, String requestKey, String method);
     boolean refundInvoice(String invoiceNumber, Double refundingAmount, String reason);
     boolean refundInvoice(String invoiceNumber, Double refundingAmount, String reason, String requestKey);
+    boolean refundInvoice(String invoiceNumber, Double refundingAmount, String reason, String requestKey, String method);
     PaymentRecord updatePaymentStatus(Long paymentId, String status);
 
     // Suppliers
