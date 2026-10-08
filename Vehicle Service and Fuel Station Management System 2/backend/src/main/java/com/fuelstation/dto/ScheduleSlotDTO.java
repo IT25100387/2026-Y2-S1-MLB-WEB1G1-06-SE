@@ -2,7 +2,7 @@ package com.fuelstation.dto;
 
 import lombok.Data;
 
-// Test comment
+// Test comment 2
 
 @Data
 public class ScheduleSlotDTO {
