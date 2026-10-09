@@ -1,0 +1,65 @@
+.manager-invoices {min-width:0;}
+.manager-invoice-heading {display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:26px;}
+.manager-invoice-kicker {color:#d6aa6c;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.16em;margin-bottom:10px;}
+.manager-invoice-balance {color:#aeb49c;font-size:12px;margin-top:14px;}
+.manager-invoice-export {padding:12px 24px;border-radius:999px;font-size:11px;white-space:nowrap;}
+.manager-invoice-export:disabled {opacity:.4;}
+.manager-invoice-filters {display:flex;flex-direction:column;gap:14px;width:100%;min-width:0;}
+.manager-invoice-primary-filters {display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.manager-invoice-search {display:flex;align-items:center;position:relative;flex:1;min-width:260px;max-width:380px;}
+.manager-invoice-search input {width:100%;padding:12px 76px 12px 16px !important;border-radius:12px;font-size:12px;box-sizing:border-box;}
+.manager-invoice-search button {position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#d6aa6c;font-size:13px;background:transparent;border:0;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;line-height:1;}
+.manager-invoice-search button[type='button'] {right:42px;color:#aeb49c;}
+.manager-invoice-search button i {display:inline-flex;align-items:center;justify-content:center;line-height:1;width:14px;height:14px;}
+.manager-invoice-select {position:relative;}
+.manager-invoice-select select {width:155px;max-width:100%;appearance:none;font-size:12px;border-radius:12px;padding:13px 32px 13px 14px;}
+.manager-invoice-select i {position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:9px;pointer-events:none;color:#d6aa6c;}
+.manager-invoice-date-filters {display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.manager-invoice-date-range {display:flex;align-items:center;gap:8px;}
+.manager-invoice-date-range span {color:#aeb49c;font-size:10px;text-transform:uppercase;letter-spacing:.08em;}
+.manager-invoice-date-range input {width:145px;min-width:0;padding:10px;font-size:12px;border-radius:12px;color-scheme:dark;}
+.manager-invoice-reset {display:flex;align-items:center;gap:8px;color:#d6aa6c;font-size:11px;}
+.manager-invoice-filters.is-compact {max-width:1200px;max-height:calc(100dvh - 150px);overflow:auto;}
+.manager-invoice-filters.is-compact .manager-invoice-date-filters {gap:12px;}
+.manager-invoice-filters.is-compact .manager-invoice-export {margin-left:auto;}
+.manager-invoice-table {margin-top:30px;}
+.manager-invoice-table table {min-width:1180px;}
+.manager-invoice-table th {white-space:nowrap;}
+.manager-invoice-table td {vertical-align:middle;overflow-wrap:anywhere;}
+.manager-invoice-table td:nth-child(8) > span {display:inline-block;max-width:100%;white-space:normal;overflow-wrap:anywhere;}
+.manager-invoice-number {display:block;font-family:monospace;font-weight:700;font-size:13px;}
+.manager-invoice-reference {display:block;margin-top:6px;font:10px monospace;color:#aeb49c;}
+.manager-invoice-total {display:block;font-size:13px;font-weight:650;white-space:nowrap;}
+.manager-invoice-paid {display:block;margin-top:5px;color:#70c794;font-size:10px;white-space:nowrap;}
+.manager-invoice-remaining {display:block;margin-top:5px;font-size:10px;color:#aeb49c;white-space:nowrap;}
+.manager-invoice-actions {display:flex;flex-direction:column;align-items:flex-start;gap:7px;}
+.manager-invoice-action {padding:7px 12px;border-radius:9px;background:#d6aa6c08;color:#e0b783;font-size:11px;font-weight:650;white-space:nowrap;cursor:pointer;}
+.manager-invoice-action:hover {background:#d6aa6c18;}
+.manager-invoice-action:disabled {opacity:.3;cursor:not-allowed;}
+.manager-invoice-empty {text-align:center;height:160px;color:#aeb49c;font-size:11px;letter-spacing:.08em;}
+.manager-invoice-pagination {display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:24px;font-size:11px;text-transform:none;letter-spacing:.02em;color:#aeb49c;flex-wrap:wrap;}
+.manager-invoice-page-info {display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.manager-invoice-page-buttons {display:flex;align-items:center;gap:6px;}
+.manager-invoice-page-buttons button {padding:6px 12px;min-height:32px;font-size:11px;font-weight:700;border-radius:6px;border:1px solid #3c422f;background:#1a1c15;color:#e8ecd9;cursor:pointer;transition:all .15s ease;}
+.manager-invoice-page-buttons button:hover:not(:disabled):not(.is-active) {background:#272b20;border-color:#d6aa6c;}
+.manager-invoice-page-buttons button.manager-page-num {min-width:32px;padding:6px 8px;}
+.manager-invoice-page-buttons button.manager-page-num.is-active {background:#d6aa6c !important;color:#111 !important;border-color:#d6aa6c !important;}
+.manager-invoice-page-buttons button:disabled {opacity:.3;cursor:not-allowed;}
+.manager-invoice-payment-id {font:14px monospace;color:#e0b783;margin-bottom:18px;}
+.manager-invoice-payment-id span {display:block;font-size:11px;color:#aeb49c;margin-top:6px;}
+.manager-invoice-payment-balance {background:#11130e;border-radius:12px;padding:18px;margin-bottom:20px;}
+.manager-invoice-payment-balance span {display:block;color:#aeb49c;text-transform:uppercase;font-size:10px;letter-spacing:.1em;}
+.manager-invoice-payment-balance strong {display:block;font-size:28px;color:#d6aa6c;margin-top:5px;}
+@media(max-width:700px){
+ .manager-invoice-heading {flex-wrap:wrap;gap:16px;}
+ .manager-invoice-primary-filters {gap:10px;}
+ .manager-invoice-search {flex-basis:100%;}
+ .manager-invoice-select {flex:1;min-width:0;}.manager-invoice-select select {width:100%;}
+ .manager-invoice-date-filters {align-items:stretch;gap:10px;}
+ .manager-invoice-date-range {width:100%;gap:6px;}
+ .manager-invoice-date-range span:first-child {width:38px;flex-shrink:0;}
+ .manager-invoice-date-range input {flex:1;width:0;padding:10px 5px;font-size:11px;}
+ .manager-invoice-pagination {align-items:flex-start;flex-wrap:wrap;}
+ .manager-invoice-page-info {gap:12px;flex-direction:column;align-items:flex-start;}
+ .manager-invoice-page-buttons {margin-left:auto;}
+}

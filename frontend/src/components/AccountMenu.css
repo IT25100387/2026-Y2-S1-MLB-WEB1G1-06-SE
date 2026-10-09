@@ -1,0 +1,37 @@
+.fuelcore-account-menu {position:relative;color:#f0f0e9;}
+.fuelcore-account-trigger {display:flex;align-items:center;gap:12px;padding:5px 12px 5px 5px;border:1px solid #444538;border-radius:999px;background:#24261d;color:#f0f0e9;transition:background-color .18s,border-color .18s;}
+.fuelcore-account-avatar {display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex-shrink:0;background:#d6aa6c;color:#241c0f;border-radius:50%;font-size:11px;font-weight:800;}
+.fuelcore-account-trigger strong {max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:1.4;font-weight:750;}
+.fuelcore-account-trigger>i {color:#d6aa6c;font-size:9px;transition:transform .18s;}
+.fuelcore-account-trigger>i.is-open {transform:rotate(180deg);}
+.fuelcore-account-trigger:hover,.fuelcore-account-trigger[aria-expanded='true'] {border-color:#d6aa6c;background:#2b2d22;}
+.fuelcore-account-menu a:focus-visible,.fuelcore-account-menu button:focus-visible {outline:2px solid #d6aa6c;outline-offset:4px;}
+.fuelcore-account-dropdown {position:absolute;z-index:200;right:0;top:calc(100% + 14px);width:310px;max-height:calc(100dvh - 108px);overflow-y:auto;overscroll-behavior:contain;background:#23251e;padding:18px;border-radius:16px;border:1px solid #d6aa6c25;box-shadow:0 24px 70px #0007;scrollbar-width:thin;scrollbar-color:#595b46 transparent;}
+.fuelcore-account-summary {display:flex;align-items:center;gap:14px;padding:4px 0 20px;}
+.fuelcore-account-summary .fuelcore-account-avatar {width:46px;height:46px;font-size:16px;}
+.fuelcore-account-summary>div {display:flex;flex-direction:column;gap:6px;min-width:0;}
+.fuelcore-account-summary strong {font-size:14px;font-weight:750;overflow-wrap:anywhere;}
+.fuelcore-account-summary span:not(.fuelcore-account-avatar) {color:#b0b2a1;font-size:10px;overflow-wrap:anywhere;}
+.fuelcore-account-summary small {color:#d6aa6c;font-size:8px;text-transform:uppercase;letter-spacing:.1em;}
+.fuelcore-account-dropdown nav {display:flex;flex-direction:column;gap:4px;}
+.fuelcore-account-menu .fuelcore-account-dropdown nav a {display:flex;align-items:center;gap:12px;padding:10px;border-radius:9px;font-size:12px;letter-spacing:normal;color:#e0e2d7;transition:background-color .18s,color .18s;}
+.fuelcore-account-menu .fuelcore-account-dropdown nav a:hover {background:#d6aa6c12;color:#edc38a;}
+.fuelcore-account-icon {width:28px;height:28px;flex-shrink:0;display:grid;place-items:center;background:#d6aa6c10;border-radius:8px;color:#d6aa6c;}
+.fuelcore-account-dropdown nav a>i {margin-left:auto;color:#a2a28c;font-size:9px;}
+.fuelcore-account-work {margin-top:14px;padding-top:14px;border-top:1px solid #ffffff0d;}
+.fuelcore-account-work>p {color:#b9a17b;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0;padding:0 10px 6px;}
+.fuelcore-account-error {font-size:11px;color:#e1b28a;margin:14px 0;}
+.fuelcore-account-signout {width:100%;display:flex;gap:12px;align-items:center;padding:15px 10px 2px;margin-top:14px;border-top:1px solid #ffffff0d;color:#dec092;font-size:11px;font-weight:700;}
+.fuelcore-account-signout:hover {color:#f1d1a4;}
+.fuelcore-account-signout:disabled {opacity:.5;cursor:wait;}
+@media(max-width:700px){
+  .fuelcore-account-dropdown {position:fixed;top:88px;right:16px;width:min(310px,calc(100vw - 32px));max-height:calc(100dvh - 104px);}
+  .fuelcore-account-trigger {gap:8px;padding-right:9px;}
+  .fuelcore-account-trigger strong {max-width:68px;}
+}
+@media(max-width:380px){
+  .fuelcore-account-trigger {padding:10px 4px;gap:7px;}
+  .fuelcore-account-trigger>.fuelcore-account-avatar {display:none;}
+  .fuelcore-account-trigger strong {max-width:48px;}
+}
+@media(prefers-reduced-motion:reduce){.fuelcore-account-menu * {transition:none!important;}}

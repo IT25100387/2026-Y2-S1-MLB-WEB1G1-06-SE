@@ -1,0 +1,13 @@
+.manager-payments {min-width:0;}
+.manager-payment-filters {width:100%;min-width:0;display:flex;flex-direction:column;gap:14px;}
+.manager-payment-filter-actions {display:flex;align-items:center;flex-wrap:wrap;gap:16px;}
+.manager-payment-filters.is-compact {max-width:1100px;max-height:calc(100dvh - 150px);overflow:auto;}
+.manager-payment-filters .manager-invoice-select:last-child select {width:185px;}
+.manager-payment-filter-actions .manager-invoice-export {margin-left:auto;}
+.manager-payment-table table {min-width:1120px;}
+.manager-payment-table td:first-child {white-space:nowrap;}
+.manager-payment-table td:nth-child(7) > span {display:inline-block;max-width:100%;white-space:normal;overflow-wrap:normal;}
+.manager-payment-refunded {display:block;color:#d0aadf;font-size:10px;margin-top:5px;white-space:nowrap;}
+.manager-payments [role='dialog'] form > .grid {grid-template-columns:1fr;}
+.manager-payments [role='dialog'] textarea {min-height:110px;}
+@media(max-width:700px){.manager-payment-filters .manager-invoice-select:last-child select {width:100%;}}

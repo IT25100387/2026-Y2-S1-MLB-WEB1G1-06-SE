@@ -1,0 +1,17 @@
+.required-mark {color:#ff7777!important;font:inherit;white-space:nowrap;}
+.field-validation-error {display:block;margin-top:6px;color:#ff7777!important;font-size:11px;font-weight:500;line-height:1.6;letter-spacing:normal;text-transform:none;overflow-wrap:anywhere;}
+:is(.unified-portal,.fuelcore-signin,.cashier-portal,.customer-portal,.mechanic-portal,.manager-portal,.admin-portal,body) :is(p,span,div)[role='alert'] {color:#ff7777!important;}
+:is(.unified-portal,.fuelcore-signin,.cashier-portal,.customer-portal,.mechanic-portal,.manager-portal,.admin-portal,body) :is(input,textarea,select,button.themed-select-trigger,button.year-picker-trigger,[role='combobox'])[aria-invalid='true'],
+:is(button.themed-select-trigger,button.year-picker-trigger,[role='combobox'])[aria-invalid='true'],
+:is(button.themed-select-trigger,button.year-picker-trigger,[role='combobox'])[aria-invalid='true']:is(:focus,:focus-visible) {border-color:#ef5555!important;box-shadow:0 0 0 1px #ef555533!important;}
+.cashier-portal :is(.required-mark,.field-validation-error,[role='alert']) {color:#b4232d!important;}
+form:has(.field-validation-error) .field-validation-error {max-width:100%;}
+.choice-input-custom {position:relative;}
+.choice-input-back {display:block;margin-top:6px;color:#d4b65d;font-size:11px;text-decoration:underline;}
+.phone-input {display:grid;grid-template-columns:minmax(104px,118px) minmax(0,1fr);gap:8px;width:100%;min-width:0;}
+.phone-input > :is(input,.themed-select) {min-width:0;width:100%;}
+.phone-input .themed-select-trigger {padding-left:10px!important;padding-right:24px!important;font-feature-settings:"tnum";}
+.phone-input .themed-select-trigger > span:first-child {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;letter-spacing:0.2px;}
+.field-validation-hint {display:block;margin-top:6px;color:#929292;font-size:11px;line-height:1.5;letter-spacing:normal;font-weight:400;text-transform:none;}
+.delivery-schedule-input {display:block;min-width:0;}
+.delivery-schedule-times {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:8px;}

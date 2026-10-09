@@ -1,0 +1,244 @@
+/* Opt-in theme for Admin, Manager, Mechanic and Customer. This file loads last.
+   The outer scope never exists on Landing, authentication or Cashier routes.
+   Customer supplies the workspace palette; Admin supplies record/card controls. */
+.unified-portal {
+  --portal-accent:#d6aa6c;
+  --record-accent:#e6bc50;
+  --record-hover:#f2cb6a;
+  --record-surface:#191919;
+  --record-header:#252525;
+  --record-line:#383838;
+  --record-muted:#a3a3a3;
+  display:contents;
+}
+.unified-portal.unified-portal.unified-portal :is(.manager-portal,.admin-portal,.mechanic-portal,.customer-portal) {
+  --color-brand-accent:var(--portal-accent);
+  --color-brand-surface:#1b1c18;
+  --color-brand-dark:#1b1c18;
+  --color-brand-border:#3a3b31;
+  --color-brand-gray:#3a3b31;
+  --admin-accent:var(--record-accent);
+  --admin-muted:var(--record-muted);
+  --manager-accent:var(--portal-accent);
+  --manager-accent-hover:#e5bd87;
+  --manager-accent-ink:var(--portal-accent);
+  --manager-background:#10110e;
+  --manager-panel:#1b1c18;
+  --manager-input:#151515;
+  --manager-line:#383838;
+  --manager-muted:#b0b2a1;
+  --manager-text:#f0f0e9;
+  min-height:100dvh;
+  background:radial-gradient(ellipse at top left,#27271c55,transparent 50%),#10110e;
+  color:#f0f0e9;
+  color-scheme:dark;
+}
+.unified-portal.unified-portal.unified-portal :is(.mechanic-portal>div,.manager-home-route) {background:transparent;color:#f0f0e9;}
+.unified-portal.unified-portal.unified-portal > div:not([class*='portal']) {
+  --color-brand-accent:var(--portal-accent);--color-brand-surface:#1b1c18;--color-brand-border:#3a3b31;
+  background:radial-gradient(ellipse at top left,#27271c55,transparent 50%),#10110e;
+}
+.unified-portal :is(main,header,footer) {min-width:0;}
+.unified-portal.unified-portal.unified-portal .manager-home-content {--color-brand-accent:var(--portal-accent);--color-brand-surface:#1b1c18;--color-brand-dark:#1b1c18;--color-brand-border:#3a3b31;}
+.unified-portal.unified-portal.unified-portal :is(.manager-home-content,.manager-main,.customer-main,.admin-content,.mechanic-portal main) {width:100%;color:#f0f0e9;}
+.unified-portal.unified-portal.unified-portal main h1 {font-size:clamp(28px,3vw,42px);font-weight:800;letter-spacing:-.04em;line-height:1.15;text-transform:none;overflow-wrap:anywhere;}
+.unified-portal.unified-portal.unified-portal main :is(h2,h3) {color:#f0f0e9;text-transform:none;}
+.unified-portal.unified-portal.unified-portal :is(button,a):focus-visible {outline:2px solid var(--record-accent);outline-offset:4px;}
+.unified-portal.unified-portal.unified-portal button:disabled {opacity:.4;cursor:not-allowed;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) :is([class*='text-gray-'],[class*='text-green-'],[class*='text-red-'],[class*='text-blue-'],[class*='text-purple-'],[class*='text-emerald-']) {color:var(--record-muted);}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) .text-white {color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) :is(.card-dark,[class~='bg-[#141414]'],[class~='bg-[#111]'],[class~='bg-[#1a1a1a]']) {background:#1b1c18;border-color:#3a3b31;box-shadow:none;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) [class~='bg-[#0a0a0a]'] {background:#141510;border-color:#3a3b31;}
+
+/* Navigation and account panels follow Customer's charcoal/olive surfaces. */
+.unified-portal.unified-portal.unified-portal :is(.manager-header,.admin-header,.customer-header,.mechanic-portal>div>header),.unified-portal.unified-portal.unified-portal>div>header {background:#13140fec;color:#f0f0e9;border-color:#d6aa6c20;backdrop-filter:blur(20px);}
+.unified-portal.unified-portal.unified-portal :is(.manager-logo,.admin-logo) {color:#f5f5ef;}
+.unified-portal.unified-portal.unified-portal :is(.manager-logo,.admin-logo) span {color:var(--portal-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-nav-link,.admin-nav-link) {color:#b6b8a9;}
+.unified-portal.unified-portal.unified-portal :is(.manager-nav-link,.admin-nav-link):is(:hover,.is-active) {color:#e2b97e;}
+.unified-portal.unified-portal.unified-portal :is(.manager-menu-lists,.admin-nav-dropdown) {background:#23251e;border-color:#d6aa6c25;border-radius:14px;box-shadow:0 24px 70px #0007;}
+.unified-portal.unified-portal.unified-portal .manager-menu-list+.manager-menu-list {border-color:#d6aa6c14;}
+.unified-portal.unified-portal.unified-portal .manager-menu-list h2 {color:#b9a17b;}
+.unified-portal.unified-portal.unified-portal :is(.manager-menu-list,.admin-nav-dropdown) a {color:#e0e2d7;}
+.unified-portal.unified-portal.unified-portal :is(.manager-menu-list,.admin-nav-dropdown) a:is(:hover,.is-active) {color:#e4bd88;background:#d6aa6c12;}
+.unified-portal.unified-portal.unified-portal .manager-menu-list a>i {color:#9c956f;}
+.unified-portal.unified-portal.unified-portal :is(.manager-footer,.admin-footer,.mechanic-footer),.unified-portal.unified-portal.unified-portal>div>footer {background:#151610;color:#b3b6a6;border-color:#ffffff0b;}
+.unified-portal.unified-portal.unified-portal :is(.manager-footer,.admin-footer,.mechanic-footer) button {color:#d1d3c2;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-trigger {background:#24261d;border-color:#444538;color:#f0f0e9;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-trigger:is(:hover,[aria-expanded='true']) {background:#2b2e22;border-color:var(--portal-accent);color:#f0f0e9;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-dropdown {background:#23251e;border-color:#d6aa6c25;border-radius:16px;color:#f0f0e9;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-avatar {background:var(--portal-accent);color:#241c0f;}
+.unified-portal.unified-portal.unified-portal :is(.fuelcore-account-trigger>i,.fuelcore-account-summary small,.fuelcore-account-work>p,.fuelcore-account-signout) {color:var(--portal-accent);}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-summary span:not(.fuelcore-account-avatar) {color:#b0b2a1;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-menu .fuelcore-account-dropdown nav a {color:#e0e2d7;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-menu .fuelcore-account-dropdown nav a:hover {background:#d6aa6c12;color:#e4bd88;}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-icon {background:#d6aa6c10;color:var(--portal-accent);}
+.unified-portal.unified-portal.unified-portal .fuelcore-account-dropdown nav a>i {color:#a2a28c;}
+.unified-portal.unified-portal.unified-portal :is(.fuelcore-account-work,.fuelcore-account-signout) {border-color:#ffffff0d;}
+.unified-portal.unified-portal.unified-portal :is(.manager-header-actions,.admin-account-controls)> .relative>div.absolute {background:#23251e;border-color:#d6aa6c25;color:#f0f0e9;}
+.unified-portal.unified-portal.unified-portal :is(.manager-header-actions,.admin-account-controls)> .relative>div.absolute button:hover {background:#d6aa6c12;}
+
+/* Admin's exact record surfaces, controls and borderless row treatment. */
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) .input-dark {
+  background:#151515;border:1px solid #383838;border-radius:8px;color:#f3f3f3;
+  padding:12px 14px;min-width:0;font-size:12px;color-scheme:dark;
+}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) .input-dark::placeholder {color:#a3a3a3;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) .input-dark:focus {border-color:var(--record-accent);box-shadow:none;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) [aria-invalid='true'] {border-color:#ef5555!important;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) :is(option,option:checked) {background:#222;color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) input[type='checkbox'] {accent-color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) .btn-accent {background:var(--record-accent);color:#111;border-radius:9px;padding:13px 20px;gap:12px;font-size:11px;box-shadow:none;font-weight:750;}
+.unified-portal.unified-portal.unified-portal :is(main,.admin-drawer,.manager-inventory-modal) .btn-accent:hover {background:var(--record-hover);box-shadow:none;}
+.unified-portal.unified-portal.unified-portal :is(.admin-action,.manager-service-action,.manager-invoice-action,.portal-table-action,.garage-row-actions button,.customer-card-button) {
+  display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:650;
+  padding:9px 12px;border:1px solid #3a3a3a;border-radius:7px;color:#e2e2e2;background:#202020;white-space:nowrap;
+}
+.unified-portal.unified-portal.unified-portal :is(.admin-action,.manager-service-action,.manager-invoice-action,.portal-table-action,.garage-row-actions button,.customer-card-button):hover {background:#2d2d2d;border-color:#626262;color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal main :is(.customer-card-button,.manager-service-action,.manager-invoice-action) {background:#202020;color:#e2e2e2;}
+.unified-portal.unified-portal.unified-portal :is(.portal-record-table,.admin-table-wrap,.manager-service-table,.manager-invoice-table,.manager-payment-table,main div.overflow-x-auto) {overflow-x:auto;border:0;border-radius:12px;background:var(--record-surface);}
+.unified-portal.unified-portal.unified-portal main table {width:100%;table-layout:fixed;border-collapse:collapse;border:0;background:var(--record-surface);color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal main table :is(thead,th) {background:var(--record-header);color:#b6b6b6;}
+.unified-portal.unified-portal.unified-portal main table th {padding:20px 18px;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;text-align:left;}
+.unified-portal.unified-portal.unified-portal main table :is(tr,td) {border:0;}
+.unified-portal.unified-portal.unified-portal main table td {padding:22px 18px;vertical-align:middle;font-size:12px;overflow-wrap:anywhere;white-space:normal;overflow:visible;text-overflow:clip;}
+.unified-portal.unified-portal.unified-portal main table tbody tr:nth-child(even) {background:transparent;}
+.unified-portal.unified-portal.unified-portal main table tbody tr:hover {background:#222;}
+.unified-portal.unified-portal.unified-portal main table :is(th,td):first-child {padding-inline:12px;}
+.unified-portal.unified-portal.unified-portal main table td strong {font-weight:700;}
+.unified-portal.unified-portal.unified-portal main table td a:not([class*='action']) {color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal main table td :is(.flex,.garage-row-actions,.admin-actions) {flex-wrap:wrap;gap:8px;}
+.unified-portal.unified-portal.unified-portal :is(.admin-meta,.manager-service-meta,.manager-invoice-reference,.manager-invoice-remaining,.manager-invoice-balance,.manager-invoice-date-range span,.manager-invoice-pagination,.manager-service-pagination,.manager-invoice-paid,.manager-payment-refunded,.manager-fuel-cell-detail) {color:var(--record-muted);}
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge) {display:inline-block;padding:6px 9px;border-radius:999px;font-size:9px;font-weight:750;letter-spacing:.045em;line-height:1.5;text-transform:uppercase;max-width:100%;color:#e6bc50;background:#292929;border:1px solid #444;white-space:normal;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state-strong,.manager-inventory-badge.is-positive) {color:#f2cb6a;border-color:#766332;background:#292929;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state-quiet,.manager-inventory-badge.is-warning) {color:#bca362;border-style:dashed;border-color:#595342;background:transparent;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state-outline,.manager-inventory-badge.is-neutral) {color:#d4b65d;background:transparent;}
+
+/* Semantic Status Color Accents */
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge,.badge).status-green {background:#102d1a !important;color:#4ade80 !important;border:1px solid #22c55e55 !important;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge,.badge).status-red {background:#331317 !important;color:#f87171 !important;border:1px solid #ef444455 !important;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge,.badge).status-amber {background:#34210a !important;color:#fbbf24 !important;border:1px solid #f59e0b55 !important;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge,.badge).status-blue {background:#0f263e !important;color:#60a5fa !important;border:1px solid #3b82f655 !important;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge,.badge).status-purple {background:#251636 !important;color:#c084fc !important;border:1px solid #a855f755 !important;}
+.unified-portal.unified-portal.unified-portal :is(.admin-state,.manager-inventory-badge,.badge).status-gray {background:#222222 !important;color:#9ca3af !important;border:1px solid #4b556355 !important;}
+
+.unified-portal.unified-portal.unified-portal :is(.manager-service-kicker,.manager-invoice-kicker,.manager-service-id,.manager-inventory-price,.manager-inventory-error,.manager-inventory-select>i,.manager-service-search button,.manager-invoice-search button,.manager-service-select>i,.manager-invoice-select>i) {color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-search,.manager-invoice-search,.admin-search) {position:relative !important;display:flex !important;align-items:center !important;min-width:260px;max-width:380px;background:#151515;border:1px solid #383838;border-radius:8px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-search,.manager-invoice-search,.admin-search) .input-dark {background:transparent;border:0;padding:12px 76px 12px 16px !important;width:100%;box-sizing:border-box;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-search,.manager-invoice-search,.admin-search):focus-within {border-color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-search,.manager-invoice-search,.admin-search) button {position:absolute !important;top:50% !important;transform:translateY(-50%) !important;right:14px !important;width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;max-width:24px !important;max-height:24px !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;padding:0 !important;margin:0 !important;border:0 !important;background:transparent !important;line-height:1 !important;cursor:pointer !important;z-index:2 !important;color:var(--record-accent) !important;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-search,.manager-invoice-search,.admin-search) button[type='button'] {right:42px !important;color:#a3a3a3 !important;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-search,.manager-invoice-search,.admin-search) button i {display:inline-flex !important;align-items:center !important;justify-content:center !important;width:14px !important;height:14px !important;line-height:1 !important;font-size:13px !important;margin:0 !important;padding:0 !important;}
+
+.unified-portal.unified-portal.unified-portal main form.relative:has(>input[aria-label='Search records']) {position:relative !important;display:flex !important;align-items:center !important;}
+.unified-portal.unified-portal.unified-portal main form.relative:has(>input[aria-label='Search records']) input {padding-right:76px !important;}
+.unified-portal.unified-portal.unified-portal main form.relative:has(>input[aria-label='Search records']) :is(.search-bar-buttons,div.absolute) {position:absolute !important;right:12px !important;top:50% !important;transform:translateY(-50%) !important;display:flex !important;align-items:center !important;gap:6px !important;margin:0 !important;padding:0 !important;z-index:2 !important;}
+.unified-portal.unified-portal.unified-portal main form.relative:has(>input[aria-label='Search records']) :is(.search-bar-buttons,div.absolute) button {position:static !important;top:auto !important;bottom:auto !important;transform:none !important;width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;max-width:24px !important;max-height:24px !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;padding:0 !important;margin:0 !important;border:0 !important;background:transparent !important;line-height:1 !important;cursor:pointer !important;color:var(--record-accent) !important;}
+.unified-portal.unified-portal.unified-portal main form.relative:has(>input[aria-label='Search records']) :is(.search-bar-buttons,div.absolute) button[type='button'] {color:#a3a3a3 !important;}
+.unified-portal.unified-portal.unified-portal main form.relative:has(>input[aria-label='Search records']) :is(.search-bar-buttons,div.absolute) button i {display:inline-flex !important;align-items:center !important;justify-content:center !important;width:14px !important;height:14px !important;line-height:1 !important;font-size:13px !important;margin:0 !important;padding:0 !important;}
+.unified-portal.unified-portal.unified-portal main .fixed[class~='z-[60]']>div {
+  border-radius:16px;background:#191919f2;border:1px solid #333;box-shadow:0 20px 50px #0009;
+  padding:12px;max-width:min(1200px,calc(100vw - 24px));max-height:calc(100dvh - 130px);overflow:auto;backdrop-filter:blur(20px);
+}
+.unified-portal.unified-portal.unified-portal main .fixed[class~='z-[60]'] :is(.admin-filters,.manager-service-filters,.manager-service-filters-panel) {margin-bottom:0;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-filters-panel) {display:flex;flex-direction:column;gap:14px;width:100%;min-width:0;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-primary-filters) {display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-date-filters) {display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-date-range) {display:flex;align-items:center;gap:8px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-date-range) span {color:var(--record-muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-date-range) input {width:145px;min-width:0;padding:10px;font-size:12px;border-radius:8px;background:#151515;border:1px solid #383838;color:#f3f3f3;color-scheme:dark;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-reset) {display:flex;align-items:center;gap:8px;color:var(--record-accent);font-size:11px;background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:8px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-service-reset):hover {background:#272727;}
+
+
+.unified-portal.unified-portal.unified-portal :is(.manager-service-row-select-wrap,.portal-pagination-info label) {display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--record-muted);}
+.unified-portal.unified-portal.unified-portal .manager-row-select {background:#1c1c1c;border:1px solid #383838;color:#f3f3f3;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;outline:none;cursor:pointer;}
+.unified-portal.unified-portal.unified-portal .manager-row-select:focus {border-color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal .manager-csv-export-btn {display:inline-flex;align-items:center;gap:6px;padding:6px 12px !important;font-size:11px !important;font-weight:650;border-radius:6px;background:#202020 !important;border:1px solid #383838 !important;color:#e2e2e2 !important;cursor:pointer;transition:all .15s ease;white-space:nowrap;}
+.unified-portal.unified-portal.unified-portal .manager-csv-export-btn:hover:not(:disabled) {background:#2d2d2d !important;border-color:var(--record-accent) !important;color:var(--record-accent) !important;}
+.unified-portal.unified-portal.unified-portal .manager-csv-export-btn:disabled {opacity:0.35;cursor:not-allowed;}
+
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination,.portal-pagination) {display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:22px 0;font-size:11px;color:var(--record-muted);text-transform:none;letter-spacing:normal;}
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination>div,.manager-service-page-info,.manager-invoice-page-info,.portal-pagination-info) {display:flex;align-items:center;gap:15px;flex-wrap:wrap;}
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination,.portal-pagination) button {padding:6px 12px;min-height:32px;font-size:11px;font-weight:700;border-radius:6px;border:1px solid #383838;background:#202020;color:#e2e2e2;cursor:pointer;transition:all .15s ease;}
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination,.portal-pagination) button:hover:not(:disabled):not(.is-active) {background:#2d2d2d;border-color:var(--record-accent);color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination,.portal-pagination) button.manager-page-num {min-width:32px;padding:6px 8px;}
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination,.portal-pagination) button.manager-page-num.is-active {background:var(--record-accent) !important;color:#111 !important;border-color:var(--record-accent) !important;}
+.unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination,.portal-pagination) button:disabled {opacity:0.35;cursor:not-allowed;}
+.unified-portal.unified-portal.unified-portal .manager-page-ellipsis {padding:0 4px;color:#666;font-size:12px;user-select:none;}
+
+/* Photo/icon catalogs share Admin's card, image, offer and typed action styles. */
+.unified-portal.unified-portal.unified-portal :is(.manager-item-card,.customer-product-card) {background:#1c1c1c;border:1px solid #303030;border-radius:12px;box-shadow:none;overflow:hidden;}
+.unified-portal.unified-portal.unified-portal :is(.manager-item-card,.customer-product-card):hover {background:#1c1c1c;box-shadow:0 16px 35px #0003;}
+.unified-portal.unified-portal.unified-portal :is(.manager-catalog-media,.customer-catalog-photo) {height:174px;background:#2b2b2b;}
+.unified-portal.unified-portal.unified-portal .customer-catalog-photo img {filter:brightness(.8) saturate(.75);}
+.unified-portal.unified-portal.unified-portal :is(.manager-catalog-discount,.customer-offer-mark) {background:var(--record-accent);color:#111;box-shadow:none;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:7px 12px;top:14px;right:14px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-catalog-popular,.customer-popular-mark) {background:#222222e8;color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-item-copy,.customer-product-copy) {padding:22px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-item-category,.manager-item-meta,.manager-item-meta strong,.customer-product-category,.customer-product-category span,.customer-product-bottom strong) {color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-item-copy,.customer-product-copy) h2 {font-size:20px;line-height:1.3;font-weight:750;text-transform:none;color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal :is(.manager-item-description,.manager-item-secondary,.manager-item-meta del,.customer-product-copy>p:not(.customer-product-category),.customer-product-bottom small,.customer-product-bottom del) {color:var(--record-muted);}
+.unified-portal.unified-portal.unified-portal .customer-product-bottom strong {font:700 11px monospace;}
+.unified-portal.unified-portal.unified-portal :is(.manager-item-footer,.customer-product-bottom) {border-top:1px solid #393939;padding-top:14px;gap:8px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-catalog-icon,.manager-icon-options button) {background:#303030;color:var(--record-accent);border-color:#444;}
+.unified-portal.unified-portal.unified-portal :is(.manager-icon-options button.is-active,.manager-catalog-view .is-active,.customer-category-tabs button.is-active,.customer-filter.is-active) {background:var(--record-accent);color:#111;}
+.unified-portal.unified-portal.unified-portal :is(.manager-catalog-view,.customer-category-tabs button,.customer-filter) {background:#202020;color:#a3a3a3;border:1px solid #3a3a3a;border-radius:8px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-popular-choice,.manager-offer-preview,.item-photo-editor,.manager-inventory-stock,.manager-inventory-goods) {background:#262626;color:#eee;border-color:#444;}
+.unified-portal.unified-portal.unified-portal :is(.manager-popular-choice small,.manager-offer-preview p,.manager-inventory-fields label>span:first-child,.item-photo-editor p,.item-photo-editor label>span) {color:var(--record-muted);}
+.unified-portal.unified-portal.unified-portal .item-photo-editor input {color:#d4b65d;}
+.unified-portal.unified-portal.unified-portal .item-photo-editor input::file-selector-button {background:#353535;color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-inventory-stock button.is-active,.manager-pump-toggle[aria-checked='true']) {background:var(--record-accent);color:#111;}
+.unified-portal.unified-portal.unified-portal :is(.manager-tank-card,.admin-price-cards article,.customer-fuel-prices article) {background:#1c1c1c;border:1px solid #303030;border-radius:12px;}
+.unified-portal.unified-portal.unified-portal :is(.manager-tank-meter>span,.manager-tank-meter.is-low>span) {background:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal main [class~='bg-blue-500/40'] {background:#e6bc5080;}
+.unified-portal.unified-portal.unified-portal main [class~='bg-red-500/40'] {background:#e6bc5038;}
+.unified-portal.unified-portal.unified-portal :is(.manager-pump-state,.manager-invoice-payment-balance) {background:#191919;border-color:#383838;}
+.unified-portal.unified-portal.unified-portal :is(.manager-pump-icon,.manager-pump-confirmed) {background:#292929;color:var(--record-accent);}
+.unified-portal.unified-portal.unified-portal :is(.manager-pump-heading p,.manager-pump-state>span,.manager-pump-inputs label>span,.manager-fuel-description,.manager-fuel-intro,.manager-fuel-footnote,.manager-tank-supplier,.manager-tank-level,.manager-tank-volume>span) {color:var(--record-muted);}
+.unified-portal.unified-portal.unified-portal .manager-fuel-description strong {color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal .manager-fuel-summary>div {background:#1b1c18;}
+
+/* Edit panels match Admin > Edit user. Create, view and booking flows retain
+   their layouts, with neutral surfaces and the same field/button treatment. */
+.unified-portal.unified-portal.unified-portal main [role='dialog'] {background:#191919;color:#f3f3f3;border-color:#404040;border-radius:12px;box-shadow:0 24px 100px #0008;}
+.unified-portal.unified-portal.unified-portal .manager-inventory-backdrop {background:#000b;backdrop-filter:blur(12px);}
+.unified-portal.unified-portal.unified-portal .admin-drawer-backdrop {position:fixed;inset:0;z-index:110;background:#000b;backdrop-filter:blur(12px);display:flex;justify-content:flex-end;}
+.unified-portal.unified-portal.unified-portal main .admin-drawer {
+  width:min(480px,100%);max-width:480px;height:100dvh;max-height:100dvh;overflow-y:auto;
+  background:#191919;border:0;border-left:1px solid #404040;border-radius:0;padding:28px;
+  box-shadow:-20px 0 80px #0007;overscroll-behavior:contain;
+}
+.unified-portal.unified-portal.unified-portal .admin-drawer>header {display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:30px;}
+.unified-portal.unified-portal.unified-portal .admin-drawer>header p {font-size:10px;font-weight:750;letter-spacing:.15em;text-transform:uppercase;color:var(--record-accent);margin-bottom:12px;}
+.unified-portal.unified-portal.unified-portal .admin-drawer>header h2 {font-size:24px;font-weight:800;letter-spacing:-.03em;text-transform:none;color:#f3f3f3;}
+.unified-portal.unified-portal.unified-portal .admin-drawer>header button {padding:10px;font-size:16px;flex-shrink:0;border:1px solid var(--record-accent);border-radius:0;color:#f3f3f3;background:transparent;width:42px;height:54px;}
+.unified-portal.unified-portal.unified-portal .admin-drawer .input-dark {width:100%;border-radius:8px;}
+.unified-portal.unified-portal.unified-portal .admin-drawer form :is(.grid,.manager-inventory-fields) {display:grid;grid-template-columns:1fr;gap:20px;}
+.unified-portal.unified-portal.unified-portal .admin-drawer form>footer {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:30px;padding-top:22px;border-top:1px solid #333;}
+.unified-portal.unified-portal.unified-portal .admin-drawer :is(.manager-inventory-goods-options,.manager-inventory-goods-details) {grid-template-columns:1fr;}
+.unified-portal.unified-portal.unified-portal .admin-drawer .manager-inventory-stock [role='group'] {background:#151515;}
+.unified-portal.unified-portal.unified-portal .admin-drawer :is(.manager-inventory-selected button,.manager-inventory-goods-details li) {background:#262626;color:#eee;}
+.unified-portal.unified-portal.unified-portal .admin-drawer .manager-inventory-goods-options label {color:#eee;}
+.unified-portal.unified-portal.unified-portal .admin-drawer :is(.booking-wizard-service-list,.booking-wizard-guest) {grid-template-columns:1fr;}
+.unified-portal.unified-portal.unified-portal .admin-drawer .booking-wizard-slot-list {grid-template-columns:repeat(2,minmax(0,1fr));}
+.unified-portal.unified-portal.unified-portal .admin-drawer .booking-wizard-steps li {flex-direction:column;text-align:center;font-size:9px;gap:8px;}
+.unified-portal.unified-portal.unified-portal .manager-inventory-modal footer {border-color:#333;}
+.unified-portal.unified-portal.unified-portal .manager-inventory-modal>header p {color:var(--record-accent);}
+
+/* Portal-owned confirmation/toast layers mount beside, rather than inside,
+   the role layout. Route presence keeps this isolated from excluded pages. */
+body:has(.unified-portal.unified-portal.unified-portal) [aria-labelledby='confirmation-title'] {--color-brand-accent:#e6bc50;background:#191919;color:#f3f3f3;border-color:#404040;border-radius:12px;}
+body:has(.unified-portal.unified-portal.unified-portal) [aria-labelledby='confirmation-title'] .text-gray-300 {color:#a3a3a3;}
+body:has(.unified-portal.unified-portal.unified-portal) [aria-labelledby='confirmation-title'] .btn-accent {background:#e6bc50;color:#111;border-radius:9px;}
+body:has(.unified-portal.unified-portal.unified-portal) [aria-live='polite']>div {--color-brand-accent:#e6bc50;background:#23251e;color:#f0f0e9;border-color:#3a3b31;}
+
+@media(max-width:700px) {
+  .unified-portal.unified-portal.unified-portal :is(.admin-pagination,.manager-service-pagination,.manager-invoice-pagination) {align-items:flex-start;gap:12px;}
+  .unified-portal.unified-portal.unified-portal :is(.admin-pagination>div,.manager-service-page-info,.manager-invoice-page-info) {gap:12px;}
+  .unified-portal.unified-portal.unified-portal .admin-drawer {padding:24px 20px;}
+  .unified-portal.unified-portal.unified-portal .admin-drawer>header {gap:12px;}
+  .unified-portal.unified-portal.unified-portal .admin-drawer>header h2 {font-size:23px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .unified-portal :is(button,a,.manager-item-card,.customer-product-card,.customer-catalog-photo img) {transition:none;}
+}

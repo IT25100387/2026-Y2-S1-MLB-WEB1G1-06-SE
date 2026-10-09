@@ -1,0 +1,116 @@
+.mechanic-portal {
+  --color-brand-accent:#d6aa6c;
+  --color-brand-surface:#1b1d17;
+  --color-brand-dark:#1b1d17;
+  --color-brand-border:#383c2f;
+  min-height:100dvh;
+  color:#efeee7;
+}
+.mechanic-portal {background:#10110e;}
+.mechanic-job-filters {display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:flex-end;}
+.mechanic-day-filter {display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
+.mechanic-day-filter label {display:grid;gap:7px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#aaa;}
+.mechanic-progress-actions {display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-top:8px;}
+.mechanic-part-search {display:flex;gap:10px;align-items:center;margin-top:20px;}
+.mechanic-part-search input {width:100%;min-width:0;}
+.mechanic-part-results {margin:16px 0;max-height:240px;overflow:auto;}
+.mechanic-part-results li,.mechanic-used-parts li {display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid #343434;font-size:12px;}
+.mechanic-part-results li>div,.mechanic-used-parts li>div {min-width:0;}
+.mechanic-part-results strong,.mechanic-used-parts strong {overflow-wrap:anywhere;}
+.mechanic-part-results [aria-pressed='true'] {color:#e6bc50;border-color:#e6bc50;}
+.mechanic-part-quantity {display:grid;gap:14px;padding:16px;background:#202020;border:1px solid #383838;border-radius:10px;font-size:12px;}
+.mechanic-notes-label {margin:24px 0 10px;font-size:11px;color:#aaa;}
+.mechanic-saved-notes {white-space:pre-wrap;overflow-wrap:anywhere;margin-bottom:24px;font-size:13px;}
+.mechanic-portal > div {min-height:calc(100dvh - 70px);background:#10110e;color:#efeee7;}
+.mechanic-portal button,.mechanic-portal a {transition:color .18s,background-color .18s,border-color .18s,box-shadow .18s;}
+.mechanic-portal button:focus-visible,.mechanic-portal a:focus-visible {outline:2px solid #d6aa6c;outline-offset:4px;}
+.mechanic-portal > div > header {background:#141610f2;border-color:#d6aa6c1a;}
+.mechanic-portal > div > header > div {max-width:1680px;margin:auto;}
+.mechanic-portal > div > header > div > a {font-size:23px;letter-spacing:.015em;}
+.mechanic-portal header nav a {padding:12px 16px;border-radius:999px;font-size:11px;letter-spacing:.065em;}
+.mechanic-portal header nav a.text-brand-accent {background:#d6aa6c12;}
+.mechanic-portal header nav a:hover {background:#d6aa6c0d;color:#ebc590;}
+.mechanic-portal > div > header .bg-brand-accent {color:#251d10;box-shadow:none;}
+.mechanic-portal > div > header [class~='bg-[#1a1a1a]'] {background:#20231a;border-color:#414534;}
+.mechanic-portal > div > header [class~='bg-[#141414]'] {background:#1e2118;border-color:#414534;}
+.mechanic-portal > div > header .border-b,.mechanic-portal > div > header .border-t {border-color:#d6aa6c18;}
+.mechanic-portal > div > header [class*='hover:bg-[#1a1a1a]']:hover {background:#2a2d21;}
+.mechanic-portal main {padding:36px 32px 64px;min-height:70vh;transition:filter .18s;}
+.mechanic-portal main h1 {font-size:clamp(28px,3vw,42px);font-weight:800;letter-spacing:-.04em;line-height:1.2;text-transform:none;overflow-wrap:anywhere;}
+.mechanic-portal main h2,.mechanic-portal main h3 {font-weight:750;letter-spacing:-.02em;text-transform:none;}
+.mechanic-portal main .max-w-4xl.p-6 {max-width:1000px;padding:0;}
+.mechanic-portal main .max-w-md > div > .flex {min-width:0;}
+.mechanic-portal main .max-w-md > div > .flex > div {min-width:0;}
+.mechanic-portal .text-gray-500 {color:#9ea48e;}
+.mechanic-portal .text-gray-400 {color:#b0b69f;}
+.mechanic-portal main .card-dark,.mechanic-portal main [class~='bg-[#141414]'] {background:#1b1d17;border-color:#383c2f;box-shadow:none;}
+.mechanic-portal main [class~='bg-[#0a0a0a]'] {background:#141610;border-color:#383c2f;}
+.mechanic-portal .btn-accent,.mechanic-portal main .bg-brand-accent {color:#251d10;font-weight:750;box-shadow:none;}
+.mechanic-portal .btn-accent {border-radius:999px;min-height:42px;}
+.mechanic-portal .btn-accent:hover {background:#e3ba81;box-shadow:0 6px 24px #d6aa6c12;}
+.mechanic-portal .btn-accent:disabled {opacity:.4;}
+.mechanic-portal .input-dark {background:#141610;border-color:#414735;color:#efeee7;}
+.mechanic-portal .input-dark::placeholder {color:#999f8c;}
+.mechanic-portal .input-dark:focus {border-color:#d6aa6c;box-shadow:0 0 0 2px #d6aa6c20;}
+.mechanic-portal main table,.mechanic-portal main table tr,.mechanic-portal main table td {border:0;}
+.mechanic-portal main div.overflow-x-auto {border:0;background:#1b1d17;border-radius:16px;}
+.mechanic-portal main table thead {background:#25291f;color:#bdc0a9;}
+.mechanic-portal main table th {padding:18px 16px;font-size:10px;font-weight:700;}
+.mechanic-portal main table td {padding:22px 16px;font-size:13px;}
+.mechanic-portal main table tbody tr:nth-child(even) {background:#ffffff03;}
+.mechanic-portal main table tbody tr:hover {background:#d6aa6c0b;}
+.mechanic-portal main .cursor-pointer td:first-child {color:#d6aa6c;}
+.mechanic-job-heading {position:relative;isolation:isolate;overflow:hidden;min-height:240px;margin-bottom:32px;padding:40px;border:1px solid #d6aa6c20;border-radius:22px;background:#1a1c15;display:flex;align-items:center;}
+.mechanic-job-heading-copy {position:relative;z-index:1;max-width:65%;}
+.mechanic-job-heading h1 {margin:0 0 16px;font-size:clamp(32px,4vw,52px);line-height:1.08;}
+.mechanic-job-kicker {margin-bottom:16px;color:#d6aa6c;font-size:10px;font-weight:750;letter-spacing:.17em;text-transform:uppercase;}
+.mechanic-job-intro {max-width:490px;color:#c2c6b1;font-size:14px;line-height:1.75;}
+.mechanic-job-photo {position:absolute;z-index:0;inset:0 0 0 45%;background:linear-gradient(90deg,#1a1c15 2%,#1a1c1566 70%,#10110e75),linear-gradient(#080a09a6,#080a09a6),url('/mechanic-workshop.jpg') 65% 47%/cover no-repeat;}
+.mechanic-job-list {padding:26px;border-radius:20px;background:#181a14;}
+.mechanic-portal .mechanic-workspace [role='dialog'] {max-width:1040px;padding:28px;}
+.mechanic-portal [role='dialog'] {background:#1d2018;border-color:#d6aa6c30;box-shadow:0 24px 100px #0009;}
+.mechanic-portal [role='dialog'] > div:first-child {align-items:center;}
+.mechanic-portal [role='dialog'] h2 {color:#e3bd85;font-family:monospace;font-size:18px;overflow-wrap:anywhere;}
+.mechanic-portal [aria-label='Close dialog'] {width:36px;height:36px;flex-shrink:0;border-radius:50%;background:#ffffff06;}
+.mechanic-job-meta {margin:0 0 24px;padding:14px 18px;border-radius:10px;background:#d6aa6c08;color:#c5c9b5;font-size:13px;line-height:1.6;}
+.mechanic-job-details {display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.mechanic-progress-panel,.mechanic-parts-panel {padding:22px;border:1px solid #d6aa6c14;border-radius:16px;background:#171a12;min-width:0;}
+.mechanic-job-details h3 {margin:0 0 22px;color:#eeeee4;font-size:17px;}
+.mechanic-job-details textarea {min-height:140px;resize:vertical;}
+.mechanic-parts-panel li {gap:16px;border-color:#d6aa6c18;font-size:12px;line-height:1.6;}
+.mechanic-parts-panel li > span:first-child {overflow-wrap:anywhere;min-width:0;}
+.mechanic-parts-panel li > span:last-child {white-space:nowrap;}
+.mechanic-portal > div > footer {display:none;}
+.mechanic-footer {margin:0 32px;padding:28px 0;border-top:1px solid #d6aa6c14;color:#a7af96;text-align:left;font:10px monospace;letter-spacing:.08em;transition:filter .18s;}
+.mechanic-portal:has([aria-label='Account center'][aria-expanded='true']) main,
+.mechanic-portal:has([aria-label='Account center'][aria-expanded='true']) > footer {filter:blur(6px);}
+body:has(.mechanic-portal) [aria-labelledby='confirmation-title'],body:has(.mechanic-portal) [aria-live='polite'] {--color-brand-accent:#d6aa6c;}
+body:has(.mechanic-portal) [aria-labelledby='confirmation-title'] {background:#1d2018;border-color:#d6aa6c30;}
+body:has(.mechanic-portal) [aria-labelledby='confirmation-title'] .btn-accent {color:#251d10;}
+@media(max-width:850px){
+ .mechanic-job-details {grid-template-columns:1fr;gap:18px;}
+ .mechanic-job-heading {padding:30px;min-height:220px;}
+ .mechanic-job-heading-copy {max-width:78%;}
+}
+@media(max-width:639px){
+ .mechanic-portal main {padding:24px 16px 40px;}
+ .mechanic-portal > div > header > div {gap:12px;}
+ .mechanic-portal > div > header > div > a {font-size:21px;}
+ .mechanic-portal [aria-label='Account center'] > span {display:none;}
+ .mechanic-portal > div > header [class~='w-72'],.mechanic-portal > div > header [class~='z-[120]'] {position:fixed;top:80px;right:16px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 108px);overflow-y:auto;}
+ .mechanic-job-heading {padding:26px 22px;min-height:230px;margin-bottom:24px;}
+ .mechanic-job-heading-copy {max-width:100%;}
+ .mechanic-job-heading h1 {max-width:250px;font-size:36px;}
+ .mechanic-job-photo {left:20%;opacity:.42;}
+ .mechanic-job-intro {font-size:13px;}
+ .mechanic-job-list {padding:18px 12px;border-radius:16px;}
+ .mechanic-portal .mechanic-workspace [role='dialog'] {padding:18px;}
+ .mechanic-progress-panel,.mechanic-parts-panel {padding:18px;}
+ .mechanic-footer {margin:0 16px;}
+ .mechanic-portal main .card-dark.p-8 {padding:22px;}
+ .mechanic-portal main .flex.gap-1.mb-8 {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+ .mechanic-portal main .flex.gap-1.mb-8 button {padding:12px 8px;font-size:9px;letter-spacing:.025em;}
+ .mechanic-portal main .flex.gap-1.mb-8 button > span {display:inline;}
+ .mechanic-portal main [class~='p-5']:has(>div.flex + button) {padding:16px;gap:16px;}
+}
+@media(prefers-reduced-motion:reduce){.mechanic-portal button,.mechanic-portal a,.mechanic-portal main,.mechanic-footer {transition:none;}}

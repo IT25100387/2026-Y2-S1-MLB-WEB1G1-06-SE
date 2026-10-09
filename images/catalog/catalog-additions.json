@@ -1,0 +1,407 @@
+{
+  "description": "Requested catalog additions. Prices and opening quantities are illustrative LKR demonstration values, not verified market quotations. Items are generic and require vehicle compatibility checks. Service prices cover the described work; used parts/fluids are separately billed through the existing workflow. Existing records and offer terms remain unchanged.",
+  "parts": [
+    {
+      "partName": "Air Filter - Petrol Engine",
+      "category": "Filters",
+      "sellingPrice": 1800,
+      "buyingPrice": 1296.0,
+      "stockQuantity": 28,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "filter"
+    },
+    {
+      "partName": "Cabin Air Filter - Carbon",
+      "category": "Filters",
+      "sellingPrice": 2200,
+      "buyingPrice": 1584.0,
+      "stockQuantity": 24,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "wind"
+    },
+    {
+      "partName": "Fuel Filter - Diesel",
+      "category": "Filters",
+      "sellingPrice": 3800,
+      "buyingPrice": 2736.0,
+      "stockQuantity": 18,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gas-pump"
+    },
+    {
+      "partName": "Iridium Spark Plug",
+      "category": "Ignition",
+      "sellingPrice": 3200,
+      "buyingPrice": 2304.0,
+      "stockQuantity": 40,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "bolt"
+    },
+    {
+      "partName": "Ignition Coil - 12V",
+      "category": "Ignition",
+      "sellingPrice": 8500,
+      "buyingPrice": 6120.0,
+      "stockQuantity": 12,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "bolt"
+    },
+    {
+      "partName": "Alternator Assembly - 12V",
+      "category": "Electrical",
+      "sellingPrice": 28500,
+      "buyingPrice": 20520.0,
+      "stockQuantity": 8,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "car-battery"
+    },
+    {
+      "partName": "Starter Motor - 12V",
+      "category": "Electrical",
+      "sellingPrice": 24500,
+      "buyingPrice": 17640.0,
+      "stockQuantity": 8,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "bolt"
+    },
+    {
+      "partName": "Timing Belt Kit",
+      "category": "Engine Parts",
+      "sellingPrice": 16500,
+      "buyingPrice": 11880.0,
+      "stockQuantity": 10,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gears"
+    },
+    {
+      "partName": "Serpentine Drive Belt",
+      "category": "Engine Parts",
+      "sellingPrice": 4200,
+      "buyingPrice": 3024.0,
+      "stockQuantity": 18,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gear"
+    },
+    {
+      "partName": "Front Engine Mount",
+      "category": "Engine Parts",
+      "sellingPrice": 12500,
+      "buyingPrice": 9000.0,
+      "stockQuantity": 10,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gear"
+    },
+    {
+      "partName": "Radiator Assembly",
+      "category": "Cooling",
+      "sellingPrice": 22500,
+      "buyingPrice": 16200.0,
+      "stockQuantity": 8,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "temperature-half"
+    },
+    {
+      "partName": "Thermostat - 82C",
+      "category": "Cooling",
+      "sellingPrice": 3800,
+      "buyingPrice": 2736.0,
+      "stockQuantity": 15,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "temperature-half"
+    },
+    {
+      "partName": "Water Pump Assembly",
+      "category": "Cooling",
+      "sellingPrice": 9500,
+      "buyingPrice": 6840.0,
+      "stockQuantity": 12,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "droplet"
+    },
+    {
+      "partName": "Upper Radiator Hose",
+      "category": "Cooling",
+      "sellingPrice": 2800,
+      "buyingPrice": 2016.0,
+      "stockQuantity": 20,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "droplet"
+    },
+    {
+      "partName": "Front Brake Disc",
+      "category": "Brakes",
+      "sellingPrice": 9800,
+      "buyingPrice": 7056.0,
+      "stockQuantity": 16,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "circle-dot"
+    },
+    {
+      "partName": "Rear Brake Shoe Set",
+      "category": "Brakes",
+      "sellingPrice": 6500,
+      "buyingPrice": 4680.0,
+      "stockQuantity": 14,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "circle-dot"
+    },
+    {
+      "partName": "DOT 4 Brake Fluid - 500ml",
+      "category": "Fluids",
+      "sellingPrice": 1800,
+      "buyingPrice": 1296.0,
+      "stockQuantity": 30,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "oil-can"
+    },
+    {
+      "partName": "Front Wheel Bearing",
+      "category": "Suspension",
+      "sellingPrice": 7500,
+      "buyingPrice": 5400.0,
+      "stockQuantity": 14,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gear"
+    },
+    {
+      "partName": "Front Shock Absorber",
+      "category": "Suspension",
+      "sellingPrice": 14500,
+      "buyingPrice": 10440.0,
+      "stockQuantity": 12,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "car"
+    },
+    {
+      "partName": "Stabilizer Link",
+      "category": "Suspension",
+      "sellingPrice": 3800,
+      "buyingPrice": 2736.0,
+      "stockQuantity": 22,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "car"
+    },
+    {
+      "partName": "Tie Rod End",
+      "category": "Steering",
+      "sellingPrice": 4500,
+      "buyingPrice": 3240.0,
+      "stockQuantity": 18,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "car"
+    },
+    {
+      "partName": "Outer CV Joint",
+      "category": "Drivetrain",
+      "sellingPrice": 9800,
+      "buyingPrice": 7056.0,
+      "stockQuantity": 12,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gears"
+    },
+    {
+      "partName": "Manual Clutch Kit",
+      "category": "Drivetrain",
+      "sellingPrice": 32500,
+      "buyingPrice": 23400.0,
+      "stockQuantity": 6,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "gears"
+    },
+    {
+      "partName": "Automatic Transmission Fluid - 1L",
+      "category": "Lubricants",
+      "sellingPrice": 3800,
+      "buyingPrice": 2736.0,
+      "stockQuantity": 30,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "oil-can"
+    },
+    {
+      "partName": "Premixed Coolant - 1L",
+      "category": "Cooling",
+      "sellingPrice": 1600,
+      "buyingPrice": 1152.0,
+      "stockQuantity": 36,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "droplet"
+    },
+    {
+      "partName": "Synthetic Engine Oil 5W-30 - 4L",
+      "category": "Lubricants",
+      "sellingPrice": 12500,
+      "buyingPrice": 9000.0,
+      "stockQuantity": 20,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "oil-can"
+    },
+    {
+      "partName": "Maintenance-Free Battery 12V 60Ah",
+      "category": "Electrical",
+      "sellingPrice": 28500,
+      "buyingPrice": 20520.0,
+      "stockQuantity": 10,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "car-battery"
+    },
+    {
+      "partName": "Wiper Blade Pair - 22 and 18 inch",
+      "category": "Accessories",
+      "sellingPrice": 2800,
+      "buyingPrice": 2016.0,
+      "stockQuantity": 24,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "wind"
+    },
+    {
+      "partName": "Halogen Headlamp Bulb H4 - 55/60W",
+      "category": "Lighting",
+      "sellingPrice": 1800,
+      "buyingPrice": 1296.0,
+      "stockQuantity": 30,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "lightbulb"
+    },
+    {
+      "partName": "Passenger Tyre - 185/65 R15",
+      "category": "Tyres",
+      "sellingPrice": 19500,
+      "buyingPrice": 14040.0,
+      "stockQuantity": 16,
+      "minStockWarning": 5,
+      "status": "Available",
+      "catalogIcon": "circle-dot"
+    }
+  ],
+  "services": [
+    {
+      "name": "Wheel Alignment",
+      "category": "Tyres & Wheels",
+      "estimatedCost": 4000,
+      "estimatedDuration": "1 Hour",
+      "shortDescription": "Measure and adjust wheel alignment angles. Confirm tyre condition before adjustment.",
+      "icon": "fa-car",
+      "popular": false,
+      "catalogIcon": "car"
+    },
+    {
+      "name": "Wheel Balancing - Four Wheels",
+      "category": "Tyres & Wheels",
+      "estimatedCost": 3000,
+      "estimatedDuration": "1 Hour",
+      "shortDescription": "Balance all four wheels to reduce vibration. Replacement weights and parts are billed separately.",
+      "icon": "fa-circle-dot",
+      "popular": false,
+      "catalogIcon": "circle-dot"
+    },
+    {
+      "name": "Air Conditioning Inspection and Re-Gas",
+      "category": "Air Conditioning",
+      "estimatedCost": 9000,
+      "estimatedDuration": "1 Hour 30 Minutes",
+      "shortDescription": "Check system pressure and leakage, then re-gas where appropriate. Refrigerant and replacement parts are billed separately.",
+      "icon": "fa-fan",
+      "popular": false,
+      "catalogIcon": "fan"
+    },
+    {
+      "name": "Brake System Inspection",
+      "category": "Brakes",
+      "estimatedCost": 2500,
+      "estimatedDuration": "1 Hour",
+      "shortDescription": "Inspect brake pads, discs, hoses and fluid condition. Explain any recommended repairs before replacement.",
+      "icon": "fa-shield-halved",
+      "popular": false,
+      "catalogIcon": "shield-halved"
+    },
+    {
+      "name": "Battery Test and Charging",
+      "category": "Electrical",
+      "estimatedCost": 1500,
+      "estimatedDuration": "30 Minutes",
+      "shortDescription": "Test battery and charging-system performance, with charging where the battery condition permits.",
+      "icon": "fa-car-battery",
+      "popular": false,
+      "catalogIcon": "car-battery"
+    },
+    {
+      "name": "Computer Diagnostic Scan",
+      "category": "Diagnostics",
+      "estimatedCost": 3500,
+      "estimatedDuration": "45 Minutes",
+      "shortDescription": "Read fault codes, inspect live data and provide diagnostic findings. Further repairs require a separate job.",
+      "icon": "fa-laptop-medical",
+      "popular": false,
+      "catalogIcon": "laptop-medical"
+    },
+    {
+      "name": "Cooling System Flush",
+      "category": "Cooling",
+      "estimatedCost": 6000,
+      "estimatedDuration": "1 Hour 30 Minutes",
+      "shortDescription": "Inspect hoses and coolant condition, flush the system and check for leaks. Coolant and parts are billed separately.",
+      "icon": "fa-temperature-half",
+      "popular": false,
+      "catalogIcon": "temperature-half"
+    },
+    {
+      "name": "Transmission Fluid Change",
+      "category": "Drivetrain",
+      "estimatedCost": 5500,
+      "estimatedDuration": "2 Hours",
+      "shortDescription": "Inspect transmission fluid condition and replace suitable fluid after vehicle-specific checks. Fluid and filters are billed separately.",
+      "icon": "fa-gears",
+      "popular": false,
+      "catalogIcon": "gears"
+    },
+    {
+      "name": "Spark Plug Replacement",
+      "category": "Engine Care",
+      "estimatedCost": 3000,
+      "estimatedDuration": "1 Hour",
+      "shortDescription": "Inspect ignition condition and replace suitable spark plugs. Spark plugs and other parts are billed separately.",
+      "icon": "fa-bolt",
+      "popular": false,
+      "catalogIcon": "bolt"
+    },
+    {
+      "name": "Tyre Rotation",
+      "category": "Tyres & Wheels",
+      "estimatedCost": 1500,
+      "estimatedDuration": "30 Minutes",
+      "shortDescription": "Rotate tyres in a pattern suitable for the vehicle and tyres, check pressures and inspect tread wear.",
+      "icon": "fa-rotate",
+      "popular": false,
+      "catalogIcon": "rotate"
+    }
+  ]
+}
